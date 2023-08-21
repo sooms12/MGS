@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icia.mgs.dao.SaleDAO">
+
+    <!--  판매 목록  -->
+    <select id="saleList" resultType="sale">
+        SELECT * FROM SALE s, PRODUCT p WHERE s.PNUM = p.PNUM ORDER BY p.PNAME ASC
+    </select>
+
+    <select id="saleList2">
+        SELECT * FROM SALE s, PRODUCT p WHERE s.PNUM = p.PNUM AND STYPE = #{sType} ORDER BY p.PNAME ASC
+    </select>
+
+    <!--  판매 상품 검색  -->
+    <select id="sSearchList" parameterType="search" resultType="sale">
+        SELECT * FROM SALE s, PRODUCT p WHERE s.PNUM = p.PNUM AND ${category} LIKE '%${keyword}%' ORDER BY p.PNAME ASC
+    </select>
+
+    <!--  판매 상품 상세보기  -->
+    <select id="sView" parameterType="int" resultType="sale">
+        SELECT * FROM SALE s, PRODUCT p WHERE s.PNUM = p.PNUM AND s.SNUM=#{sNum}
+    </select>
+
+    <select id="likeup2">
+        UPDATE SALE SET LIKECOUNT = LIKECOUNT+1 WHERE SNUM = #{sNum}
+    </select>
+
+    <select id="likedown2">
+        UPDATE SALE SET LIKECOUNT = LIKECOUNT-1 WHERE SNUM = #{sNum}
+    </select>
+
+    <select id="likecheck">
+        SELECT LIKECOUNT FROM SALE WHERE SNUM = #{sNum}
+    </select>
+
+    <select id="findlike" resultType="plike">
+        SELECT * FROM PLIKE WHERE MID = #{mId}
+    </select>
+
+</mapper>

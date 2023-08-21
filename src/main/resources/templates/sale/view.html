@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Ogani Template">
+  <meta name="keywords" content="Ogani, unica, creative, html">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <title>[[${view.PName}]]</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+  <!-- Css Styles -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+  <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+  <link rel="stylesheet" href="/css/jquery-ui.min.css" type="text/css">
+  <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+  <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+
+  <!-- summernote -->
+  <link rel="stylesheet" href="/css/summernote/summernote-lite.css">
+
+  <link rel="shortcut icon" href="/img/banner/파비콘.png" type="image/x-icon">
+
+  </style>
+
+</head>
+
+<body>
+
+<!-- Header Section Begin -->
+<header class="header">
+  <div class="header__top">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-6">
+          <div class="header__top__left">
+
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="header__top__right">
+            <div class="header__top__right__social" th:if="${session.loginId ne null}">
+              <a id="mypage"><i class=""></i>내정보</a>
+            </div>
+
+            <!-- 회원목록 -->
+            <div class="header__top__right__social" th:if="${session.loginId eq 'admin'}">
+              <a id="mList"><i class=""></i>회원목록</a>
+            </div>
+
+            <div class="header__top__right__language" th:if="${session.loginId eq null}">
+              <div>로그인/회원가입</div>
+              <span class="arrow_carrot-down"></span>
+              <ul>
+                <li>
+                  <a href="/loginForm" th:if="${session.loginId eq null}">
+                    <i class="fa fa-user"> </i>로그인</a>
+                </li>
+                <li>
+                  <a href="/joinForm" data-bs-toggle="modal" data-bs-target="#myModal"
+                     th:if="${session.loginId eq null}">
+                    <i class=" fa fa-info-circle"></i>회원가입</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="modal" id="myModal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                    <h4 class="modal-title">회원가입</h4>
+                    <span type="button" class="icon_close" data-bs-dismiss="modal"></span>
+                  </div>
+
+                  <!-- Modal body -->
+                  <div class="modal-body" style="text-align: center">
+                    <a type="button" id="join"><img src="/img/이메일가입.png"/></a>
+                    <a type="button" id="kLogin"><img src="/img/카카오로그인.png"/></a>
+                  </div>
+
+                  <!-- Modal footer -->
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="header__top__right__auth" th:if="${session.loginId ne null}">
+              <a id="logout"><i class="fa fa-user"></i>로그아웃</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="header__logo">
+          <a href="/"><img src="/img/공구의숲 로고3.png" alt="공구의숲 로고"></a>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <nav class="header__menu">
+          <ul>
+            <li><a id="sList">전체상품</a></li>
+            <li><a id="request">상품신청</a></li>
+            <li><a class="psList">인원조사참여</a></li>
+            <li th:if="${session.loginId eq 'admin'}"><a href="">관리자메뉴</a>
+              <ul class="header__menu__dropdown">
+                <li><a id="cList">회사목록</a></li>
+                <li><a id="pList">상품목록</a></li>
+                <li><a id="rqList">신청물품 목록</a></li>
+                <li><a class="psList">인원조사 목록</a></li>
+              </ul>
+            </li>
+
+          </ul>
+        </nav>
+      </div>
+      <div class="col-lg-3">
+        <div class="header__cart">
+          <ul>
+            <li th:if="${session.loginId ne null}"><a id="likeList"><i class="fa fa-heart" style="text-align: center"><p>찜한상품</p></i></a></li>
+            <li><a id="ctlist"><i class="fa fa-shopping-bag" style="text-align: center"><p>장바구니</p></i></a></li>
+            <li><a href="/csList"><i class="fa fa-phone" style="text-align: center"><p>고객센터</p></i></a></li>
+          </ul>
+          <div class="header__cart__price"><span></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="humberger__open">
+      <i class="fa fa-bars"></i>
+    </div>
+  </div>
+</header>
+<!-- Header Section End -->
+
+<!-- 초록색 바 Begin -->
+<div style="margin-top: 50px"></div>
+<section class="breadcrumb-section set-bg" data-setbg="/img/동숲바닥.png" style="height: 100px">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <div class="breadcrumb__text">
+          <div class="breadcrumb__option">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- 초록색 바 End -->
+
+<!-- Product Details Section Begin -->
+<section class="product-details spad">
+
+  <div class="container">
+    <div class="row">
+      <input type="hidden" name="pNum" th:value="${view.pNum}"/>
+
+      <div class="col-lg-6 col-md-6">
+        <div class="product__details__pic">
+          <div class="product__details__pic__item">
+            <img class="product__details__pic__item--large"
+                 th:src="@{|/product/${view.pmPicName}|}" alt="상품메인 이미지">
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-12">
+
+        <div class="product__details__text">
+          <nav>
+            <!-- 이름이랑 상품설명! -->
+            <h3>[[${view.PName}]]</h3>
+            <p th:utext="${view.PspInfo}">[[${view.PspInfo}]]</p>
+
+            <div class="product__details__rating">
+
+              <strong th:if="${view.sfDate != null}" style="font-size: 20px; color: green;">마감일 : [[${view.sfDate}]]</strong>
+
+            </div>
+            <!-- 가격 -->
+          </nav>
+          <nav class="org_price">
+            <div class="org_price" th:if="${view.sDiscount!=0}">
+              <del>[[${view.PPrice}]]</del>
+              <span>[[${view.sDiscount}]]%</span>
+            </div>
+            <div class="dis_price">
+              <ins th:text="${(view.PPrice - (view.PPrice * view.SDiscount/100))}"></ins>
+            </div>
+          </nav>
+
+          <!-- 배송안내!! -->
+          <nav>
+            <span class="delivery" th:if="${view.sdPrice == 0}">무료배송</span>
+            <span class="delivery" th:if="${view.sdPrice == 3000}">배송비 3000원</span>
+            <span class="arrival"></span><a href="#review" style="color: green;">리뷰보기</a>
+            </br>
+            <span class="desc">본 상품은 국내배송만 가능합니다.</span>
+          </nav>
+          </br>
+          <div class="product__details__quantity">
+            <div class="quantity">
+              <a>구매수량</a>&nbsp&nbsp&nbsp
+              <div style="margin-top: 10px;">
+                <input th:type="number" value="1" name="cCount" id="cCount" max="10" min="1" oninput="validity.valid||(value=max);" style="font-size: 17px; padding-left: 15px; padding-right: 15px; padding-top: 10px; padding-bottom: 10px;">
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="total">
+            <br><span id="price" th:text="${view.pPrice}"></span>
+            <em>총 상품금액</em>
+          </div>
+
+
+          <a id="cart_btn" class="primary-btn" style="color: white!important;" th:if="${session.loginId ne 'admin'}">장바구니</a>
+          <a href="orderForm" class="primary-btn" th:if="${session.loginId ne 'admin'}">구매하기</a>
+          <a id="modify" class="primary-btn" th:if="${session.loginId eq 'admin'}" style="color: white!important;">수정</a>
+          <a id="delete" class="primary-btn" th:if="${session.loginId eq 'admin'}" style="color: white!important;">삭제</a>
+          <a href="#"><span id="lCount"></span></a>
+
+        </div>
+      </div>
+
+      <article class="detail">
+        </br>
+        </br>
+        </br>
+        <nav><h1>상품정보</h1></nav>
+        <p th:utext="${view.pInfo}"></p>
+        </article>
+
+
+
+      <article class="review" id="review">
+        <nav><h1>상품리뷰</h1></nav>
+
+        <div data-th-include="ReviewForm" id="ReviewForm"></div>
+
+      </article>
+
+
+
+      <!-- 다른거 있었던자리!(오렌지처럼) -->
+    </div>
+  </div>
+</section>
+<!-- Product Details Section End -->
+
+
+
+<!-- Footer 시작했다~ -->
+
+<footer class="footer spad">
+  <div class="col-lg-12">
+    <div class="footer__widget">
+      <h6></h6>
+      <a><a href="#">회사소개</a></a>&nbsp;&nbsp;
+      <a><a href="#">이용약관</a></a>&nbsp;&nbsp;
+      <a><a href="#">개인정보처리방침</a></a>&nbsp;&nbsp;
+      <a><a href="#">FAQ</a></a>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="footer__about">
+          <div class="footer__about__logo">
+            <a href="/"><img src="/img/공구의숲 로고3.png" alt=""></a>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
+        <div class="footer__widget">
+          <h5 class="mb-12"><b class="fs-14px">고객센터 1234-5678</b></h5>
+          <a>평일 AM 10:00 ~ PM 5:00</p></a>
+          <a>점심시간 PM 12:30 ~ PM 13:30</p></a>
+          <a>주말 및 공휴일 휴무</p></a>
+          <a>계좌번호 NH농협 000-0000-000-00</p></a>
+          <a>문의메일 Kimmango@naver.com</p></a>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-12">
+        <div class="footer__widget">
+          <a>대표자.김망고</a></br>
+          <a>사업자등록번호.1234567890</a></br>
+          <a>주소. 인천광역시 미추홀구 한나루로 453</a></br>
+          <a>TEL.032-1234-5678</a></br>
+          <a>Email. hello@colorlib.com</a>
+
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="footer__copyright">
+          <div class="footer__copyright__text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- Footer 끝났다~ -->
+
+<!-- Js Plugins -->
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery-ui.min.js"></script>
+<script src="/js/jquery.slicknav.js"></script>
+<script src="/js/mixitup.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+
+<script>
+
+  let id = "[[${session.loginId}]]";
+
+  // 회원가입
+  $('#join').click(function () {
+    location.href = "/joinForm";
+  });
+
+  // 카카오로그아웃
+  $('#klogout').click(function () {
+    location.href = "/klogout";
+  });
+
+  // 회원목록
+  $('#mList').click(function () {
+    location.href = "/mList";
+  });
+
+  // 로그인
+  $('#login').click(function () {
+    location.href = "/loginForm";
+  });
+
+  // 내정보
+  $('#mypage').click(function () {
+    location.href = "/mView/[[${session.loginId}]]";
+  });
+
+  // 찜목록
+  $('#likeList').click(function () {
+      location.href = "/likeList/[[${session.loginId}]]";
+  });
+
+  // 장바구니 목록
+  $('#ctlist').click(function () {
+    if (id == "") {
+      alert('로그인 후 이용해주세요!')
+      location.href = ""
+    }
+    if (id != "") {
+      location.href = "/ctlist";
+    }
+  });
+
+  // 로그아웃
+  $('#logout').click(function () {
+    location.href = "/mLogout";
+  });
+
+  // 신청목록
+  $('#rqList').click(function () {
+    location.href = "/rqList";
+  });
+
+  // 회사목록
+  $('#cList').click(function () {
+    location.href = "/cList";
+  });
+
+  // 상품목록
+  $('#pList').click(function () {
+    location.href = "/pList";
+  });
+
+  // 판매목록
+  $('#sList').click(function () {
+    location.href = "/sList";
+  });
+
+  $('#request').click(function () {
+    if (id == "") {
+      alert('로그인 후 이용해주세요!')
+      location.href = ""
+    }else {
+      location.href = "/requestForm";
+    }
+  });
+
+  $('#rqList').click(function () {
+    location.href = "/rqList";
+  });
+
+  $('.psList').click(function () {
+    location.href = "/psList";
+  });
+
+  $('.psList').click(function () {
+    if (id == "") {
+      alert('로그인 후 이용해주세요!')
+      location.href = "redirect:/loginForm"
+    }else {
+      location.href = "/psList";
+    }
+  });
+
+  // 카카오인증버튼
+  $('#kLogin').click(function () {
+    location.href = "";
+  });
+
+  // 수정
+  $('#modify').click(function () {
+    location.href = "/sModiForm/[[${view.SNum}]]";
+  });
+
+  // 삭제
+  $('#delete').click(function () {
+    if (confirm('정말 삭제하시겠습니까?') == true) {
+      alert('삭제했습니다.');
+      location.href = "/sDelete/[[${view.SNum}]]";
+    } else {
+      alert('취소했습니다.')
+      location.href = "/sView/[[${view.SNum}]]";
+    }
+
+  });
+  window.onload = function() {
+    document.getElementById('cCount').addEventListener('change', function() {
+      let count = parseInt(this.value)||1; // 수량을 가져옴
+      let price = [[${view.pPrice}]]; // 가격을 가져옴
+      let totalPrice = count * price; // 수량에 따른 가격을 계산함
+      document.getElementById('price').innerText = totalPrice; // 계산된 가격을 출력함
+    });
+
+    document.getElementById('cCount').addEventListener('keyup', function() {
+      let count = parseInt(this.value)||1; // 수량을 가져옴
+      let price = [[${view.pPrice}]]; // 가격을 가져옴
+      let totalPrice = count * price; // 수량에 따른 가격을 계산함
+      document.getElementById('price').innerText = totalPrice; // 계산된 가격을 출력함
+    });
+    cCount.addEventListener('input', function() {
+      this.value = this.value.replace(/[^0-9]/g, ''); // 숫자 이외의 값은 제거함
+      if (this.value === '') {
+        this.value = '1'; // 값이 없으면 1로 설정함
+      }
+    });
+    // 초기에 인풋 요소의 값이 없는 경우 1로 설정함
+    if (cCount.value === '') {
+      cCount.value = '1';
+    }
+  }
+
+  // 장바구니에 담기 버튼 클릭 시 이벤트 처리
+  $("#cart_btn").click(function () {
+
+    let cCount = $('#cCount').val();
+    console.log(cCount);
+    // 서버로 전송할 데이터
+    let formData = {
+      mId : '[[${session.loginId}]]',
+      sNum: [[${view.SNum}]],
+      cCount: cCount
+    };
+
+    console.log("#####################################");
+    console.log(formData);
+
+    // AJAX를 이용하여 서버에 데이터 전송
+    $.ajax({
+      url: '/addToCart', // 장바구니에 추가하는 컨트롤러 엔드포인트 설정
+      type: 'POST', // POST 방식으로 요청 보내기
+      data: formData,
+      dataType: 'json',
+      success: function (list) {
+        console.log(list);
+        alert("장바구니에 상품을 추가하였습니다.");
+        location.href="redirect:/ccList";
+      },
+      error: function () {
+        /*console.error("AJAX 요청 실패: "+ error);*/
+        /* console.log("상태 코드: "+ error.status); * // 상태 코드 출력
+         /*console.log("에러 내용: "+ error.responseText); */// 서버에서 반환된 에러 메시지 또는 응답 데이터 출력
+        alert("장바구니에 상품을 추가하지 못했습니다. 다시 시도해주세요.");
+      }
+    });
+  });
+
+  // 페이지 로드 후 실행되는 코드
+  $(document).ready(function() {
+    let cCount = $('#cCount').val();
+    if (!cCount || cCount == 0) {
+      $('#cCount').val(1);
+    }
+  });
+  $(function () {
+    let mId = "[[${session.loginId}]]";
+    let id = "[[${id}]]";
+    let sNum = [[${view.sNum}]];
+    let pNum = [[${view.pNum}]];
+    let txt ="";
+    let txt1 = "";
+    if(mId == ""){
+      txt = `<input type="button" style="padding: 13px; padding-left:15px; padding-right:15px; margin-bottom: 3px;" value="♡" id="NL" class="btn btn-outline-danger">`;
+      $('#lCount').empty();
+      $('#lCount').append(txt);
+    }
+
+    if(mId != id){
+      txt = `<input type="button" style="padding: 13px; padding-left:15px; padding-right:15px; margin-bottom: 3px;" value="♡" id="likeup" class="btn btn-outline-danger">`;
+      $('#lCount').empty();
+      $('#lCount').append(txt);
+    }
+    if(mId == id && mId != ""){
+      txt = `<input type="button" style="padding: 13px; padding-left:15px; padding-right:15px; margin-bottom: 3px;" value="♥" id="likedown" class="btn btn-danger">`;
+      $('#lCount').empty();
+      $('#lCount').append(txt);
+    }
+
+    $('body').on('click', '#NL',function (){
+      alert('로그인 후 이용해주세요!');
+    })
+    $('body').on('click', '#likeup', function() {
+      $.ajax({
+        type: "POST",
+        url: "/likeup",
+        data: {"mId": mId, "sNum": sNum, "pNum" : pNum},
+        dataType: "json",
+        success: function (result) {
+          console.log("result1 : " + result);
+          if (result == 1) {
+            txt = `<input type="button" style="padding: 13px; padding-left:15px; padding-right:15px; margin-bottom: 3px;" value="♥" id="likedown" class="btn btn-danger">`;
+            $('#lCount').empty();
+            $('#lCount').append(txt);
+          }
+
+        },
+        error: function () {
+          alert('likeup 통신 실패!')
+        }
+      });
+    });
+
+    $('body').on('click', '#likedown', function(){
+      $.ajax({
+        type: "POST",
+        url : "/likedown",
+        data : { "mId" : mId , "sNum" : sNum, "pNum" : pNum},
+        dataType: "json",
+        success : function (result2){
+          console.log("result2 : " + result2);
+          if (result2 == 2){
+            txt = `<input type="button" style="padding: 13px; padding-left:15px; padding-right:15px; margin-bottom: 3px;" value="♡" id="likeup" class="btn btn-outline-danger">`;
+            $('#lCount').empty();
+            $('#lCount').append(txt);
+          }
+
+        },error : function (){
+          alert('likedown 통신 실패!')
+        }
+      });
+    });
+  });
+
+</script>
+
+</html>

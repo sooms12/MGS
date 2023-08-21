@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icia.mgs.dao.ProductDAO">
+
+    <!--  상품검색  -->
+    <select id="pSearchList" parameterType="search" resultType="product">
+        SELECT * FROM PRODUCT p, COMPANY c WHERE p.CNUM = c.CNUM AND ${category} LIKE '%${keyword}%' ORDER BY PNUM ASC
+    </select>
+
+    <!--  상품목록  -->
+    <select id="productList" resultType="product">
+        SELECT * FROM PRODUCT p, COMPANY c WHERE p.CNUM = c.CNUM ORDER BY PNUM ASC
+    </select>
+
+    <!--  상품정보 상세보기  -->
+    <select id="pView" parameterType="int" resultType="product">
+        SELECT * FROM PRODUCT p, COMPANY c WHERE p.CNUM = c.CNUM AND p.PNUM=#{pNum}
+    </select>
+
+
+    <!-- 좋아요 -->
+    <select id="likeup2">
+        UPDATE PRODUCT SET LIKECOUNT = LIKECOUNT+1 WHERE PNUM = #{pNum}
+    </select>
+
+    <select id="likedown2">
+        UPDATE PRODUCT SET LIKECOUNT = LIKECOUNT-1 WHERE PNUM = #{pNum}
+    </select>
+
+    <select id="likecheck">
+        SELECT LIKECOUNT FROM PRODUCT WHERE PNUM = #{pNum}
+    </select>
+
+</mapper>

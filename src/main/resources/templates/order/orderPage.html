@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=], initial-scale=1.0">
+
+    <meta name="author"content="one">
+    <meta name="date"content="23.07.31">
+    <meta name="description"content="">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon">
+    <title>상품주문결제</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="shortcut icon" href="/img/banner/파비콘.png" type="image/x-icon">
+    <style>
+        .order > form {}
+
+        .order > form > table {
+            width: 100%;
+            border-top: 2px solid #000;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .order > form > table tr { border-bottom: 1px solid #d3d3d3 ;}
+
+        .order > form > table th {
+            padding: 12px 0;
+            background: #fff;
+            color: #383838;
+            font-size: 0.95em;
+            text-align: center;
+            letter-spacing: -0.1em;
+        }
+
+        .order > form > table .empty { display: none ;}
+
+        .order > form > table td { text-align: center;}
+
+        .order > form > table td:last-child {
+            color: #ff006c;
+            font-weight: bold;
+        }
+
+        .order > form > table tr > td > input {}
+
+        .order > form > table td > article {
+            padding: 6px;
+            overflow: hidden;
+        }
+
+        .order > form > table td > article > a {
+            float: left;
+            display: inline-block;
+        }
+
+        .order > form > table td > article > a > img { width: 80px;}
+
+        .order > form > table td > article > div {
+            float: left;
+            margin-left: 10px;
+        }
+
+        .order > form > table td > article > div > h2 { text-align: left; }
+
+        .order > form > table td > article > div > p {
+            text-align: left;
+            color: #777;
+            margin-top: 4px;
+        }
+
+        .order > form > article {
+            width: 560px;
+            height: auto;
+            margin-top: 16px;
+        }
+
+        .order > form > .delivery {}
+
+        .order > form > .final {
+            float: right;
+            width: 360px;
+            height: 412px;
+            padding: 20px;
+            margin-top: 12px;
+            background: #fff;
+            border: 1px solid #d3d3d3;
+            box-sizing: border-box;
+        }
+
+        .order > form > .final > h2 {
+            width: 100%;
+            font-weight: bold;
+            font-size: 16px;
+            border-bottom: 1px solid #111;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            box-sizing: border-box;
+            color: #1e1e1e;
+        }
+
+        .order > form > .final > table { width: 100%; }
+
+        .order > form > .final > table tr:nth-last-child(1) td {
+            font-size: 20px;
+        }
+
+        .order > form > .final > table tr:nth-last-child(1) td:last-child {
+            color: #ff006c;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .order > form > .final > table td {
+            padding: 10px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .order > form > .final > table td:last-child { text-align: right; }
+
+        .order > form > .final > input[type=submit] {
+            width: 100%;
+            height: 56px;
+            font-size: 26px;
+            border-width: 1px;
+            border-color: #d81818;
+            border-bottom-color: #9e1212;
+            background: #ed2f2f;
+            background-image: -webkit-linear-gradient(#ed2f2f, #dd0e0e);
+            color: #fff;
+            box-sizing: border-box;
+            margin-top: 10px;
+        }
+
+        .order > form > article > h1 {
+            font-weight: bold;
+            font-size: 14px;
+            padding: 6px 0;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #111;
+        }
+
+        .order > form > article > div { padding: 6px; box-sizing: border-box; }
+
+        .order > form > .delivery > table { margin-top: 10px; }
+
+        .order > form > .delivery > table tr > td:nth-child(1) { padding: 6px; }
+
+        .order > form > .delivery > table input[type=button] {
+            padding: 4px 6px;
+            border: 1px solid #ccc;
+            background-color: #f0f4f9;
+            border-color: #acc0e0;
+            color: #3371c9;
+            outline: none;
+        }
+
+        .order > form input {
+            color: #555;
+            padding: 2px 0;
+            border: 1px solid #999;
+            box-sizing: border-box;
+        }
+
+        .order > form > .delivery > table input[name=addr1] { width: 400px; }
+        .order > form > .delivery > table input[name=addr2] { width: 400px; }
+
+        .order > form > .discount > div { overflow: hidden; }
+        .order > form > .discount > div > p { float: left; }
+        .order > form > .discount > div > label { float: right; }
+        .order > form > .discount > div > label > input[type=text] {
+            display: inline-block;
+            outline: none;
+        }
+        .order > form > .discount > div > span {
+            display: block;
+            margin-top: 20px;
+            color: #888;
+        }
+        .order > form > .discount > div > label > input[type=button] {
+            padding: 4px 6px;
+            border: 1px solid #ccc;
+            background-color: #f0f4f9;
+            border-color: #acc0e0;
+            color: #3371c9;
+            outline: none;
+        }
+        .order > form > .payment > div { margin-bottom: 10px; }
+        .order > form > .payment > div > span {
+            display: inline-block;
+            color: #3a85c8;
+            margin: 6px 0;
+        }
+        .order > form > .payment > div label { margin-right: 16px; }
+        .order > form > .payment > div input {
+            vertical-align: bottom;
+            margin-right: 4px;
+        }
+        .order > form > .alert {
+            width: 560px;
+            background-color: #f7f7f7;
+            padding: 6px;
+            padding-left: 20px;
+            color: #999;
+            box-sizing: border-box;
+        }
+        .order > form > .alert > ul { list-style: inherit; }
+        .order > form > .alert > ul > li { line-height: 20px; }
+        .order > form > .alert > ul > li > span { position: relative; left: -6px; }
+
+        h1{
+            background-color: white;
+            border-top: none;
+
+        }
+
+        p{
+            background-color: white;
+            border: none;
+        }
+
+        form{
+            background-color: white;
+            border: none;
+        }
+
+        body{
+            background-color: white;
+            border: none;
+        }
+
+        nav > p{
+            background-color: white;
+            border: none;
+        }
+
+
+
+    </style>
+</head>
+<body>
+<div id="wrapper">
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header__top__left">
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="header__top__right">
+                            <div class="header__top__right__social" th:if="${session.loginId ne null}">
+                                <a id="mypage"><i class=""></i>내정보</a>
+                            </div>
+
+                            <!-- 회원목록 -->
+                            <div class="header__top__right__social" th:if="${session.loginId eq 'admin'}">
+                                <a id="mList"><i class=""></i>회원목록</a>
+                            </div>
+
+                            <div class="header__top__right__language" th:if="${session.loginId eq null}">
+                                <div>로그인/회원가입</div>
+                                <span class="arrow_carrot-down"></span>
+                                <ul>
+                                    <li>
+                                        <a href="/loginForm" th:if="${session.loginId eq null}">
+                                            <i class="fa fa-user"> </i>로그인</a>
+                                    </li>
+                                    <li>
+                                        <a href="/joinForm" data-bs-toggle="modal" data-bs-target="#myModal"
+                                           th:if="${session.loginId eq null}">
+                                            <i class=" fa fa-info-circle"></i>회원가입</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="modal" id="myModal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">회원가입</h4>
+                                            <span type="button" class="icon_close" data-bs-dismiss="modal"></span>
+                                        </div>
+
+                                        <!-- Modal body -->
+                                        <div class="modal-body" style="text-align: center">
+                                            <a type="button" id="join"><img src="/img/이메일가입.png"/></a>
+                                            <a type="button" id="kLogin"><img src="/img/카카오로그인.png"/></a>
+                                        </div>
+
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="header__top__right__auth" th:if="${session.loginId ne null}">
+                                <a id="logout"><i class="fa fa-user"></i>로그아웃</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__logo">
+                        <a href="/"><img src="/img/공구의숲 로고3.png" alt="공구의숲 로고"></a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <nav class="header__menu">
+                        <ul>
+                            <li><a id="sList">전체상품</a></li>
+                            <li><a id="request">상품신청</a></li>
+                            <li><a class="psList">인원조사참여</a></li>
+                            <li th:if="${session.loginId eq 'admin'}"><a href="">관리자메뉴</a>
+                                <ul class="header__menu__dropdown">
+                                    <li><a id="cList">회사목록</a></li>
+                                    <li><a id="pList">상품목록</a></li>
+                                    <li><a id="rqList">신청물품 목록</a></li>
+                                    <li><a class="psList">인원조사 목록</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__cart">
+                        <ul>
+                            <li th:if="${session.loginId ne null}"><a id="likeList"><i class="fa fa-heart" style="text-align: center"><p>찜한상품</p></i></a></li>
+                            <li><a id="ctlist"><i class="fa fa-shopping-bag" style="text-align: center"><p>장바구니</p></i></a></li>
+                            <li><a href="/csList"><i class="fa fa-phone" style="text-align: center"><p>고객센터</p></i></a></li>
+                        </ul>
+                        <div class="header__cart__price"><span></span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="humberger__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+    </br>
+    </br>
+    </brs>
+    <section class="order" style="padding-left: 300px; background-color: white; border: none; padding-right: 300px">
+        <nav>
+            <h1>주문결제</h1>
+            <p>
+                HOME >
+                <span>장바구니</span>
+                >
+                <strong>주문결제</strong>
+            </p>
+        </nav>
+        <form action="#">
+            <table border="0">
+                <thead>
+                <tr>
+                    <th>상품명</th>
+                    <th>판매가</th>
+                    <th>총수량</th>
+                    <th>소계</th>
+                </tr>
+                </thead>
+
+                <tbody id="selectedProductsBody">
+                <!-- JavaScript를 통해 선택된 상품 정보를 여기에 추가합니다. -->
+                </tbody>
+
+            </table>
+            <div class="final">
+                <h2>최종결제 정보</h2>
+                <table>
+                    <tr>
+                        <td>상품금액</td>
+                        <td>6900</td>
+                    </tr>
+                    <tr>
+                        <td>배송비</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>전체주문금액</td>
+                        <td>6900</td>
+                    </tr>
+                </table>
+                <!-- 결제 버튼 -->
+                <button type="button" class="btn btn-primary" onclick="requestPay()">결제하기</button>
+            </div>
+
+            <!-- 결제방법 -->
+            <article class="payment">
+                <h1>결제방법</h1>
+                <div>
+                    <span></span>
+                    <p>
+                        <label>
+
+                        </label>
+                        <label>
+                            <input type="radio" name="payment" value="type5">카카오페이
+                        </label>
+                    </p>
+                </div>
+                <div>
+                    <span></span>
+                    <p>
+                        <label>
+
+                        </label>
+                        <label>
+
+                        </label>
+                    </p>
+                </div>
+                <div>
+                    <span></span>
+                    <p>
+                        <label>
+
+                        </label>
+                        <label>
+
+                        </label>
+                    </p>
+                </div>
+
+            </article>
+            <!-- 경고 -->
+            <article class="alert">
+                <ul>
+                    <li><span>공구의숲의 모든 판매자는 안전거래를 위해 구매금액, 결제수단에 상관없이 모든거래에 대하여 공구의숲의 구매안전서비스(에스크로)를 제공하고 있습니다.
+                            </span></li>
+                    <li><span>공구의숲의 전자금융거래법에 의해 결제대금예치업 등록번호는 123-456-7890 입니다.
+                            </span></li>
+                    <li><span>등록여부는 금융감독원 홈페이지(www.fss.or.kr)의 업무자료>인허가업무안내>전자금융업등록현황에서 확인하실수 있습니다.
+                            </span></li>
+                </ul>
+            </article>
+        </form>
+    </section>
+    </main>
+    <!-- Footer 시작했다~ -->
+
+    <footer class="footer spad">
+        <div class="col-lg-12">
+            <div class="footer__widget">
+                <h6></h6>
+                <a><a href="#">회사소개</a></a>&nbsp;&nbsp;
+                <a><a href="#">이용약관</a></a>&nbsp;&nbsp;
+                <a><a href="#">개인정보처리방침</a></a>&nbsp;&nbsp;
+                <a><a href="#">FAQ</a></a>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__about__logo">
+                            <a href="/"><img src="img/공구의숲 로고3.png" alt=""></a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
+                    <div class="footer__widget">
+                        <h5 class="mb-12"><b class="fs-14px">고객센터 1234-5678</b></h5>
+                        <a>평일 AM 10:00 ~ PM 5:00</p></a>
+                        <a>점심시간 PM 12:30 ~ PM 13:30</p></a>
+                        <a>주말 및 공휴일 휴무</p></a>
+                        <a>계좌번호 NH농협 000-0000-000-00</p></a>
+                        <a>문의메일 Kimmango@naver.com</p></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="footer__widget">
+                        <a>대표자.김망고</a></br>
+                        <a>사업자등록번호.1234567890</a></br>
+                        <a>주소. 인천광역시 미추홀구 한나루로 453</a></br>
+                        <a>TEL.032-1234-5678</a></br>
+                        <a>Email. hello@colorlib.com</a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer__copyright">
+                        <div class="footer__copyright__text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer 끝났다~ -->
+    <button type="button" id="top">상단이동</button>
+</div>
+
+<!-- Js Plugins -->
+<script src="https://code.jquery.com/jquery-3.6.4.js"
+        integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+        crossorigin="anonymous">
+</script>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/jquery.slicknav.js"></script>
+<script src="js/mixitup.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/main.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script>
+
+    let id = "[[${session.loginId}]]";
+
+    // 회원가입
+    $('#join').click(function () {
+        location.href = "/joinForm";
+    });
+
+    // 카카오로그아웃
+    $('#klogout').click(function () {
+        location.href = "/klogout";
+    });
+
+    // 회원목록
+    $('#mList').click(function () {
+        location.href = "/mList";
+    });
+
+    // 로그인
+    $('#login').click(function () {
+        location.href = "/loginForm";
+    });
+
+    // 내정보
+    $('#mypage').click(function () {
+        location.href = "/mView/[[${session.loginId}]]";
+    });
+
+    // 찜목록
+    $('#likeList').click(function () {
+        location.href = "/likeList/[[${session.loginId}]]";
+    });
+
+    // 장바구니 목록
+    $('#ctlist').click(function () {
+        if (id == "") {
+            alert('로그인 후 이용해주세요!')
+            location.href = ""
+        }
+        if (id != "") {
+            location.href = "/ctlist";
+        }
+    });
+
+    // 로그아웃
+    $('#logout').click(function () {
+        location.href = "/mLogout";
+    });
+
+    // 신청목록
+    $('#rqList').click(function () {
+        location.href = "/rqList";
+    });
+
+    // 회사목록
+    $('#cList').click(function () {
+        location.href = "/cList";
+    });
+
+    // 상품목록
+    $('#pList').click(function () {
+        location.href = "/pList";
+    });
+
+    // 판매목록
+    $('#sList').click(function () {
+        location.href = "/sList";
+    });
+
+    $('#request').click(function () {
+        if (id == "") {
+            alert('로그인 후 이용해주세요!')
+            location.href = ""
+        }else {
+            location.href = "/requestForm";
+        }
+    });
+
+    $('#rqList').click(function () {
+        location.href = "/rqList";
+    });
+
+    $('.psList').click(function () {
+        location.href = "/psList";
+    });
+
+    $('.psList').click(function () {
+        if (id == "") {
+            alert('로그인 후 이용해주세요!')
+            location.href = "redirect:/loginForm"
+        }else {
+            location.href = "/psList";
+        }
+    });
+
+    // 카카오인증버튼
+    $('#kLogin').click(function () {
+        location.href = "";
+    });
+
+
+    // 선택된 상품 정보를 로컬 스토리지에서 가져옴
+    let selectedProducts = JSON.parse(localStorage.getItem('selectedProducts'));
+
+    // 선택된 상품 정보를 테이블에 추가하는 함수
+    var nameList=[];
+    function displaySelectedProducts() {
+        let tableBody = document.getElementById('selectedProductsBody');
+        tableBody.innerHTML = '';
+
+        selectedProducts.forEach(item => {
+            let row = document.createElement('tr');
+            row.innerHTML = `
+                    <tr>
+                        <td><article>
+                            <a href="#">
+
+                            </a>
+                        <div>
+                            <h4><a href="#">${item.pName}</a></h4>
+                        </div>
+                        </article></td>
+                        <td style="color: black!important;">${item.pPrice}</td>
+                        <td style="color: black!important;">1</td>
+                        <td>${item.productPrice}</td>
+                    </tr>
+                `;
+
+            tableBody.appendChild(row);
+        });
+    }
+    // 페이지 로드 시 선택된 상품 정보를 표시
+    displaySelectedProducts();
+    //주문내역 가져오기
+    /////////////////////////////////////////////////////////////
+
+    //결제
+    var IMP = window.IMP;
+    IMP.init("imp46683683");
+
+    var reservNum = null;
+
+    function requestPay() {
+        console.log(nameList);
+        console.log(selectedProducts.productPrice);
+        console.log(selectedProducts.cCount);
+        $.ajax({
+            url: "/insertDB",
+            method: "POST",
+            data: {
+                "oPrice": selectedProducts.productPrice,
+                "oCount": selectedProducts.cCount
+            },
+            dataType: "text",
+            success: function (result) {
+                if (result != null) {
+                    reservNum = result;
+                    console.log("DB 입력 STPAY = 0 " +
+                        "reservNum : " + reservNum);
+                } else {
+                    console.log("실패");
+                }
+            }, error: function () {
+                console.log("DB 1차 입력실패!")
+            }
+        });
+
+        IMP.request_pay({
+                pg: 'kakaopay.TC0ONETIME',
+                pay_method: 'card',
+                merchant_uid: reservNum,
+                name: "이름",
+                amount: 100,
+                buyer_email: 'test@portone.io',
+                buyer_name: '구매자이름',
+                buyer_tel: '010-1234-5678',
+                buyer_addr: '서울특별시 강남구 삼성동',
+                buyer_postcode: '123-456',
+                m_redirect_url: '{모바일에서 결제 완료 후 리디렉션 될 URL}',
+            }, function (rsp) {
+                console.log(rsp);
+
+                // 결제 성공
+                if (rsp.success) {
+                    $.ajax({
+                        url: "/successPay",
+                        type: "POST",
+                        data: {
+                            "oNum": reservNum,
+                        },
+                        dataType: "text",
+                        success: function (result) {
+                            if (result == "OK") {
+                                alert("결제가 완료되었습니다.")
+                                location.href = "/myOrder";
+                            }
+                        },
+                        error: function () {
+                            location.href = "/indexForm";
+                        }
+                    })
+                    // 결제 실패시
+                } else {
+                    var msg = '결제에 실패하였습니다.';
+                    msg += '에러내용 : ' + rsp.error_msg;
+
+                    alert(msg);
+                }
+            }
+        );
+    };
+
+</script>
+
+</body>
+</html>

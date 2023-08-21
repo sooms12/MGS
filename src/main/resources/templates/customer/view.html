@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <title>고객센터</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/css/customerView.css" type="text/css">
+
+    <link rel="shortcut icon" href="/img/banner/파비콘.png" type="image/x-icon">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</head>
+
+<body>
+
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Header Section Begin -->
+<header class="header">
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="header__top__left">
+
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="header__top__right">
+                        <div class="header__top__right__social" th:if="${session.loginId ne null}">
+                            <a id="mypage"><i class=""></i>내정보</a>
+                        </div>
+
+                        <!-- 회원목록 -->
+                        <div class="header__top__right__social" th:if="${session.loginId eq 'admin'}">
+                            <a id="mList"><i class=""></i>회원목록</a>
+                        </div>
+
+                        <div class="header__top__right__language" th:if="${session.loginId eq null}">
+                            <div>로그인/회원가입</div>
+                            <span class="arrow_carrot-down"></span>
+                            <ul>
+                                <li>
+                                    <a href="/loginForm" th:if="${session.loginId eq null}">
+                                        <i class="fa fa-user"> </i>로그인</a>
+                                </li>
+                                <li>
+                                    <a href="/joinForm" data-bs-toggle="modal" data-bs-target="#myModal"
+                                       th:if="${session.loginId eq null}">
+                                        <i class=" fa fa-info-circle"></i>회원가입</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="modal" id="myModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">회원가입</h4>
+                                        <span type="button" class="icon_close" data-bs-dismiss="modal"></span>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body" style="text-align: center">
+                                        <a type="button" id="join"><img src="/img/이메일가입.png"/></a>
+                                        <a type="button" id="kLogin"><img src="/img/카카오로그인.png"/></a>
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="header__top__right__auth" th:if="${session.loginId ne null}">
+                            <a id="logout"><i class="fa fa-user"></i>로그아웃</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="header__logo">
+                    <a href="/"><img src="/img/공구의숲 로고3.png" alt="공구의숲 로고"></a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <nav class="header__menu">
+                    <ul>
+                        <li><a id="sList">전체상품</a></li>
+                        <li><a id="request">상품신청</a></li>
+                        <li><a class="psList">인원조사참여</a></li>
+                        <li th:if="${session.loginId eq 'admin'}"><a href="">관리자메뉴</a>
+                            <ul class="header__menu__dropdown">
+                                <li><a id="cList">회사목록</a></li>
+                                <li><a id="pList">상품목록</a></li>
+                                <li><a id="rqList">신청물품 목록</a></li>
+                                <li><a class="psList">인원조사 목록</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3">
+                <div class="header__cart">
+                    <ul>
+                        <li th:if="${session.loginId ne null}"><a id="likeList"><i class="fa fa-heart" style="text-align: center"><p>찜한상품</p></i></a></li>
+                        <li><a id="ctlist"><i class="fa fa-shopping-bag" style="text-align: center"><p>장바구니</p></i></a></li>
+                        <li><a href="/csList"><i class="fa fa-phone" style="text-align: center"><p>고객센터</p></i></a></li>
+                    </ul>
+                    <div class="header__cart__price"><span></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="humberger__open">
+            <i class="fa fa-bars"></i>
+        </div>
+    </div>
+</header>
+<!-- Header Section End -->
+
+
+<!-- 게시글 상세보기 start -->
+
+<section class="breadcrumb-section set-bg" data-setbg="/img/동숲바닥.png">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>고객센터</h2>
+                    <div class="breadcrumb__option">
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="cs">
+    <div class="notice">
+        <nav>
+            <div>
+                <p>
+                    홈
+                    <span>></span>
+                    공지사항
+                </p>
+            </div>
+        </nav>
+        <section class="view">
+
+            <article>
+                <div class="qaList">
+                    <nav>
+                        <div th:if="${view.csType eq 0}" class="title" style="font-size: 20px; text-align: center;">
+                            <span style="padding-left:35%; font-size: 15px;">[회원]</span><h2 style="float: right; padding-right: 40%; padding-top: 5px;" th:if="${view.csType eq 0}" class="title">[[${view.csTitle}]]</h2>
+                        </div>
+
+                        <div  th:if="${view.csType eq 1}" class="title" style="font-size: 20px; text-align: center;">
+                            <span style="padding-left:35%; font-size: 15px;">[상품]</span><h2 style="float: right; padding-right: 40%; padding-top: 5px;" th:if="${view.csType eq 1}" class="title">[[${view.csTitle}]]</h2>
+                        </div>
+
+                        <div th:if="${view.csType eq 2}" class="title" style="font-size: 20px; text-align: center;">
+                            <span style="padding-left:35%; font-size: 15px;">[배송]</span><h2 style="float: right; padding-right: 40%; padding-top: 5px;" th:if="${view.csType eq 2}" class="title">[[${view.csTitle}]]</h2>
+                        </div>
+
+                        <div th:if="${view.csType eq 3}" class="title" style="font-size: 20px; text-align: center;">
+                            <span style="padding-left:35%; font-size: 15px;">[취소/교환/반품]</span><h2 style="float: right; padding-right: 40%; padding-top: 5px;" th:if="${view.csType eq 3}" class="title">[[${view.csTitle}]]</h2>
+                        </div>
+
+                        <div th:if="${view.csType eq 4}" class="title" style="font-size: 20px; text-align: center;">
+                            <span style="padding-left:35%; font-size: 15px;">[결제]</span><h2 style="float: right; padding-right: 40%; padding-top: 5px;" th:if="${view.csType eq 4}" class="title">[[${view.csTitle}]]</h2>
+                        </div>
+
+                        <span th:text="${view.mId}" class="date"></span>
+                        <span th:text="${#dates.format(view.csDate,'yyyy-MM-dd')}" class="date"></span>
+                    </nav>
+
+                    <div class="content">
+                        <p size="40">[[${view.csContent}]]</p>
+
+                    </div><br/>
+                    <span style="text-align: right; padding-left: 88%;"  th:if="${session.loginId eq view.mId || session.loginId eq 'admin'}">
+                        <button class="btn btn-outline-primary" type="button" id="modify">수정</button>
+                        <button class="btn btn-outline-danger" type="button" id="delete">삭제</button>
+                    </span>
+                </div><br/>
+
+
+                <div>
+                    <div class="card" id="cmtWrite">
+                        <div>
+                            <div th:if="${session.loginId eq view.mId || session.loginId eq 'admin'}">
+                            <div class="card-body">
+                            <input type="hidden" th:value="${view.csNum}" id="cmbNum">
+
+                            <h5>
+                                작성자 : <span id="loginId" th:value="${session.loginId}">[[${session.loginId}]]</span>
+                                <input type="hidden" th:value="${session.loginId}" id="cmWriter">
+                            </h5>
+
+                                <textarea rows="5" cols="145" id="cmContent" onfocus="checkLogin()"></textarea><br/>
+                            </div>
+                                <div class="card-footer" style="padding-left: 90%">
+                                <button type="submit" class="btn btn-success" id="writeBtn">댓글 입력</button>
+                                </div>
+                            </div>
+                            </div>
+
+                    </div>
+                    <br/>
+
+                    <div id="cmtArea">
+
+                    </div>
+                </div>
+            </article>
+        </section>
+    </div>
+</section>
+
+<!-- Footer 시작했다~ -->
+<footer class="footer spad">
+    <div class="col-lg-12">
+        <div class="footer__widget">
+            <h6></h6>
+            <a><a href="#">회사소개</a></a>&nbsp;&nbsp;
+            <a><a href="#">이용약관</a></a>&nbsp;&nbsp;
+            <a><a href="#">개인정보처리방침</a></a>&nbsp;&nbsp;
+            <a><a href="#">FAQ</a></a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="footer__about">
+                    <div class="footer__about__logo">
+                        <a href="/"><img src="/img/공구의숲 로고3.png" alt=""></a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
+                <div class="footer__widget">
+                    <h5 class="mb-12"><b class="fs-14px">고객센터 1234-5678</b></h5>
+                    <a>평일 AM 10:00 ~ PM 5:00</p></a>
+                    <a>점심시간 PM 12:30 ~ PM 13:30</p></a>
+                    <a>주말 및 공휴일 휴무</p></a>
+                    <a>계좌번호 NH농협 000-0000-000-00</p></a>
+                    <a>문의메일 Kimmango@naver.com</p></a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+                <div class="footer__widget">
+                    <a>대표자.김망고</a></br>
+                    <a>사업자등록번호.1234567890</a></br>
+                    <a>주소. 인천광역시 미추홀구 한나루로 453</a></br>
+                    <a>TEL.032-1234-5678</a></br>
+                    <a>Email. hello@colorlib.com</a>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="footer__copyright">
+                    <div class="footer__copyright__text">
+                        <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+                            All rights reserved | This template is made with <i class="fa fa-heart"
+                                                                                aria-hidden="true"></i> by <a
+                                    href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer 끝났다~ -->
+
+<!-- Js Plugins -->
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery-ui.min.js"></script>
+<script src="/js/jquery.slicknav.js"></script>
+<script src="/js/mixitup.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+</body>
+<!-- Js Plugins -->
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/jquery.slicknav.js"></script>
+<script src="js/mixitup.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/main.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+<script src="js/tab.js"></script>
+<script src="https://kit.fontawesome.com/121d217c4e.js"
+        crossorigin="anonymous"></script>
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+
+<script>
+
+    $('#modify').click(function () {
+        location.href = "/csModiForm/[[${view.csNum}]]";
+    });
+
+    $('#delete').click(function () {
+        location.href = "/csDelete/[[${view.csNum}]]";
+    });
+
+    let id = '[[${session.loginId}]]';
+    let mId = '[[${view.mId}]]';
+
+
+    // 로그인 확인
+    function checkLogin() {
+        if (id == null) {
+            $('#cmContent').blur();
+            alert('로그인 후 사용하세요')
+            location.href = "/loginForm";
+        }
+    }
+
+    let csNum = [[${view.csNum}]];
+
+    // 댓글 불러오기
+    $.ajax({
+        type: "POST",
+        url: "/csmList",
+        data: {
+            "csNum": csNum
+        },
+        dataType: "json",
+        success: function (list) {
+            console.log(list);
+            cmtList(list);
+        },
+        error: function () {
+            alert('댓글 불러오기 통신 실패');
+        }
+    });
+
+    // 댓글 입력
+    $('#writeBtn').click(function () {
+        let mId = $('#cmWriter').val();
+        let cComment = $('#cmContent').val();
+
+        $.ajax({
+            type: "POST",
+            url: "/csmWrite",
+            data: {
+                "mId": mId,
+                "cComment": cComment,
+                "csNum": csNum
+            },
+            dataType: "json",
+            success: function (list) {
+                console.log(list);
+                cmtList(list);
+                $('#cmContent').val("");
+            },
+            error: function () {
+                alert('댓글 작성 통신 실패');
+            }
+        });
+    });
+
+    // 댓글 목록
+    function cmtList(list) {
+
+        if (list.length > 0) {
+            let output = "";
+
+            for (let i in list) {
+                let cNum = list[i].ccNum;
+                console.log('cNum : ' + cNum);
+
+                output += "<ul class=\"list-group list-group-flush\">";
+                output += "<li class=\"list-group-item\">";
+                output += "<div>";
+                output += "<div id='cmId" + cNum + "'></div>";
+                output += "<span>" + list[i].mId + "&nbsp;&nbsp;&nbsp; 작성일&nbsp;&nbsp;:&nbsp;&nbsp;" + list[i].ccDate + "</span>";
+                output += "</div><br/>";
+
+                output += "<div>";
+                output += "<p>" + list[i].cComment + "</p>";
+                output += "</div>";
+
+                if (id == list[i].mId || id == 'admin') {
+                    output += "<div style='text-align: right;' class='right-down'><button  class=\"btn btn-outline-primary\" onclick=\"cmModiForm('" + list[i].csNum + "','" + list[i].ccomment + "','" + list[i].ccNum + "')\">수정</button><button class=\"btn btn-outline-danger\" onclick=\"cmDelete('" + list[i].csNum + "','" + list[i].ccNum + "')\">삭제</button></div>";
+                    output += "<br/>";
+                } else {
+                    output += "<div></div>";
+                }
+                output += "</li>";
+                output += "</ul>"
+            }
+
+            console.log(output);
+            $('#cmtArea').empty();
+            $('#cmtArea').append(output);
+        }
+    }
+
+    // cmModiForm : 댓글 수정 형식
+    function cmModiForm(csNum, cComment, ccNum) {
+        console.log('csNum : ' + csNum);
+        console.log('cComment : ' + cComment);
+        console.log('ccNum : ' + ccNum);
+
+        let output = "";
+
+        output += "<div>";
+        output += "<div>";
+        output += "<input type='hidden' value='" + csNum + "' id='csNum'/>";
+        output += "<input type='hidden' value='" + ccNum + "' id='ccNum'/>";
+        output += "<input type='hidden' value='" + id + "' id='mId'/>";
+        output += "<textarea id='mcsContent'>" + cComment + "</textarea>";
+        output += "</div>";
+
+        output += "<div><br/>";
+        output += "<button onclick='cmModify()'>수정</button>";
+        output += "</div>";
+        output += "</div>";
+
+        $('#cmId' + ccNum).replaceWith(output);
+        $('#mcsContent').focus();
+    };
+
+    // cmModify : 댓글 수정
+    function cmModify() {
+
+        let conf = confirm('수정하시겠습니까?');
+
+        let csNum = $('#csNum').val();
+        let cComment = $('#mcsContent').val();
+        let ccNum = $('#ccNum').val();
+        if (conf) {
+            $.ajax({
+                type: "POST",
+                url: "/csmModify",
+                data: {
+                    "csNum": csNum,
+                    "cComment": cComment,
+                    "ccNum": ccNum,
+                    "mId": id
+                },
+                dataType: "json",
+                success: function (list) {
+                    cmtList(list);
+                    alert('댓글을 수정했습니다.');
+                },
+                error: function () {
+                    alert('댓글 수정 통신 실패!');
+                }
+            });
+        } else {
+            alert('취소했습니다.');
+        }
+    }
+
+    // cmDelete : 댓글 삭제
+    function cmDelete(csNum, ccNum) {
+        let conf = confirm('삭제하시겠습니까?');
+
+        if (conf){
+            $.ajax({
+                type : "POST",
+                url : "/csmDelete",
+                data : {
+                    "csNum" : csNum,
+                    "ccNum" : ccNum
+                },
+                dataType : "json",
+                success : function (list){
+                    cmtList(list);
+                    alert('댓글을 삭제했습니다.');
+                },
+                error : function (){
+                    alert('댓글 삭제 통신 실패!');
+                }
+            });
+        }else {
+            alert('취소했습니다.');
+            location.href="/csView/" + csNum;
+        }
+    }
+
+    // 회원가입
+    $('#join').click(function () {
+        location.href = "/joinForm";
+        location.href = "/joinForm";
+    });
+
+    // 카카오로그아웃
+    $('#klogout').click(function () {
+        location.href = "/klogout";
+    });
+
+    // 회원목록
+    $('#mList').click(function () {
+        location.href = "/mList";
+    });
+
+    // 로그인
+    $('#login').click(function () {
+        location.href = "/loginForm";
+    });
+
+    // 내정보
+    $('#mypage').click(function () {
+        location.href = "/mView/[[${session.loginId}]]";
+    });
+
+    // 찜목록
+    $('#likeList').click(function () {
+        location.href = "/likeList/[[${session.loginId}]]";
+    });
+
+    // 장바구니 목록
+    $('#ctlist').click(function () {
+        if (id == "") {
+            alert('로그인 후 이용해주세요!')
+            location.href = ""
+        }
+        if (id != "") {
+            location.href = "/ctlist";
+        }
+    });
+
+    // 로그아웃
+    $('#logout').click(function () {
+        location.href = "/mLogout";
+    });
+
+    // 신청페이지
+    $('#request').click(function () {
+        location.href = "/requestForm";
+    });
+
+    // 신청목록
+    $('#rqList').click(function () {
+        location.href = "/rqList";
+    });
+
+    // 회사목록
+    $('#cList').click(function () {
+        location.href = "/cList";
+    });
+
+    // 상품목록
+    $('#pList').click(function () {
+        location.href = "/pList";
+    });
+
+    // 판매목록
+    $('#sList').click(function () {
+        location.href = "/sList";
+    });
+
+    $('#request').click(function () {
+        if (id == "") {
+            alert('로그인 후 이용해주세요!')
+            location.href = "redirect:/loginForm"
+        }else {
+            location.href = "requestForm";
+        }
+    });
+
+    $('#rqList').click(function () {
+        location.href = "/rqList";
+    });
+
+    $('.psList').click(function () {
+        location.href = "/psList";
+    });
+
+    $('.psList').click(function () {
+        if (id == "") {
+            alert('로그인 후 이용해주세요!')
+            location.href = "redirect:/loginForm"
+        }else {
+            location.href = "/psList";
+        }
+    });
+
+    // 카카오인증버튼
+    $('#kLogin').click(function () {
+        location.href = "";
+    });
+
+</script>
+
+</html>

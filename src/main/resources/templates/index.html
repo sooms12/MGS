@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>공구의 숲</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="shortcut icon" href="/img/banner/파비콘.png" type="image/x-icon">
+
+    <style>
+        .footer__copyright__text {
+            text-align: center;
+        }
+
+
+    </style>
+
+</head>
+
+<body>
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Header Section Begin -->
+<header class="header">
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="header__top__left">
+
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="header__top__right">
+                        <div class="header__top__right__social" th:if="${session.loginId ne null}">
+                            <a id="mypage"><i class=""></i>내정보</a>
+                        </div>
+
+                        <!-- 회원목록 -->
+                        <div class="header__top__right__social" th:if="${session.loginId eq 'admin'}">
+                            <a id="mList"><i class=""></i>회원목록</a>
+                        </div>
+
+                        <div class="header__top__right__language" th:if="${session.loginId eq null}">
+                            <div>로그인/회원가입</div>
+                            <span class="arrow_carrot-down"></span>
+                            <ul>
+                                <li>
+                                    <a href="/loginForm" th:if="${session.loginId eq null}">
+                                        <i class="fa fa-user"> </i>로그인</a>
+                                </li>
+                                <li>
+                                    <a href="/joinForm" data-bs-toggle="modal" data-bs-target="#myModal"
+                                       th:if="${session.loginId eq null}">
+                                        <i class=" fa fa-info-circle"></i>회원가입</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="modal" id="myModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">회원가입</h4>
+                                        <span type="button" class="icon_close" data-bs-dismiss="modal"></span>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body" style="text-align: center">
+                                        <a type="button" id="join"><img src="/img/이메일가입.png"/></a>
+                                        <a type="button" id="kLogin"><img src="/img/카카오로그인.png"/></a>
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="header__top__right__auth" th:if="${session.loginId ne null}">
+                            <a id="logout"><i class="fa fa-user"></i>로그아웃</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="header__logo">
+                    <a href="/"><img src="/img/공구의숲 로고3.png" alt="공구의숲 로고"></a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <nav class="header__menu">
+                    <ul>
+                        <li><a id="sList">전체상품</a></li>
+                        <li><a id="request">상품신청</a></li>
+                        <li><a class="psList">인원조사참여</a></li>
+                        <li th:if="${session.loginId eq 'admin'}"><a href="">관리자메뉴</a>
+                            <ul class="header__menu__dropdown">
+                                <li><a id="cList">회사목록</a></li>
+                                <li><a id="pList">상품목록</a></li>
+                                <li><a id="rqList">신청물품 목록</a></li>
+                                <li><a class="psList">인원조사 목록</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3">
+                <div class="header__cart">
+                    <ul>
+                        <li th:if="${session.loginId ne null}"><a id="likeList"><i class="fa fa-heart" style="text-align: center"><p>찜한상품</p></i></a></li>
+                        <li><a id="ctlist"><i class="fa fa-shopping-bag" style="text-align: center"><p>장바구니</p></i></a></li>
+                        <li><a href="/csList"><i class="fa fa-phone" style="text-align: center"><p>고객센터</p></i></a></li>
+                    </ul>
+                    <div class="header__cart__price"><span></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="humberger__open">
+            <i class="fa fa-bars"></i>
+        </div>
+    </div>
+</header>
+<!-- Header Section End -->
+
+<!-- Hero Section Begin -->
+<section class="hero">
+    <div class="container">
+        <div>
+
+            <div class="col-lg-12">
+                <div class="hero__search">
+
+                </div>
+
+                <div class="hero__item set-bg" data-setbg="/img/banner/배너3.jpg">
+
+                    <!--사진출처-->
+                    <!--<a href="https://kr.freepik.com/free-vector/flat-background-for-summer-season-celebration_41689783.htm#query=%EC%97%AC%EB%A6%84&position=38&from_view=search&track=sph">Freepik</a>-->
+                    <div class="hero__text">
+                        <span></span>
+                        <h2>여름상품 <br/>30~70%세일</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+</section>
+<!-- Hero Section End -->
+
+<!-- Categories Section Begin -->
+<div class="section-title">
+    <h2>인기상품</h2></br>
+</div>
+<section class="categories">
+    <div class="container">
+        <div class="row">
+            <div class="categories__slider owl-carousel">
+
+                <div class="col-lg-3">
+                    <a href="/sView/75"><div class="categories__item set-bg" data-setbg="/product/2f702521_2145491319544837_634876798.jpg">
+                    </div></a>
+                    <h5><a href="/sView/75" style="text-align: center; color: black;">사세 버팔로 윙봉 오리지널맛 (냉동)</a></h5>
+                </div>
+                <div class="col-lg-3">
+                    <a href="/sView/65"><div class="categories__item set-bg" data-setbg="/product/2193e423_2.밀키트소개.gif">
+                    </div></a>
+                    <h5><a href="/sView/65" style="text-align: center; color: black;">아차산매운떡볶이(Feat 삼진어묵)</a>
+                    </h5>
+                </div>
+                <div class="col-lg-3">
+                    <a href="/sView/68"><div class="categories__item set-bg" data-setbg="/product/c36265c1_c4e6f98bb786b763f446564d32ac63fe.jpg">
+                    </div></a>
+                    <h5><a href="/sView/68" style="text-align: center; color: black;">K-투움바 파스타 밀키트</a></h5>
+                </div>
+                <div class="col-lg-3">
+                    <a href="/sView/67"><div class="categories__item set-bg" data-setbg="/product/6eb31e5d_15451231710617605_1473051612.jpeg">
+                    </div></a>
+                    <h5><a href="/sView/67" style="text-align: center; color: black;">제주 톳 간장소스 파스타</a></h5>
+                </div>
+                <div class="col-lg-3">
+                    <a href="/sView/77"><div class="categories__item set-bg" data-setbg="/product/14991aa1_67551918324750992_421747072.jpg">
+                    </div></a>
+                    <h5><a href="/sView/77" style="text-align: center; color: black;">홍수계 매콤 당면듬뿍 순살 찜닭 냉동 밀키트 850g</a></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Categories Section End -->
+
+<!-- Featured Section Begin -->
+<section class="featured spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>추천상품</h2>
+                </div>
+                <div class="featured__controls">
+                </div>
+            </div>
+        </div>
+        <div class="row featured__filter">
+
+            <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fast-food">
+                <div class="featured__item">
+                    <a href="/sView/83">
+                        <div class="featured__item__pic set-bg" data-setbg="/product/347ce8fe_비타메인.jpg"></div>
+                    </a>
+                    <div class="featured__item__text">
+                        <h6><a href="/sView/83">멀티비타민 오쏘몰 이뮨</a></h6>
+                        <div class="org_price">
+                            <del>159600</del>
+                            <span>
+                                    25%
+                                </span>
+                        </div>
+                        <div class="dis_price">
+                            <ins>
+                                119700
+                            </ins>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+                <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fast-food">
+                    <div class="featured__item">
+                        <a href="/sView/84">
+                            <div class="featured__item__pic set-bg" data-setbg="/product/8116c05c_모기메인.gif"></div>
+                        </a>
+                        <div class="featured__item__text">
+                            <h6><a href="/sView/84">모기+벌레 다비켜 커튼</a></h6>
+                            <div class="org_price">
+                                <del>30000</del>
+                                <span>
+                                    64%
+                                </span>
+                            </div>
+                            <div class="dis_price">
+                                <ins>
+                                    10800
+                                </ins>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fast-food">
+                    <div class="featured__item">
+                        <a href="/sView/101">
+                            <div class="featured__item__pic set-bg" data-setbg="/product/e7737e53_토시메인.jpg"></div>
+                        </a>
+                        <div class="featured__item__text">
+                            <h6><a href="/sView/101">생활공유 자외선 차단 쿨토시</a></h6>
+                            <div class="org_price">
+                                <del>30000</del>
+                                <span>
+                                    74%
+                                </span>
+                            </div>
+                            <div class="dis_price">
+                                <ins>
+                                    7800
+                                </ins>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fast-food">
+                    <div class="featured__item">
+                        <a href="/sView/91">
+                            <div class="featured__item__pic set-bg" data-setbg="/product/0d31786a_쿨목메인.jpg"></div>
+                        </a>
+                        <div class="featured__item__text">
+                            <h6><a href="/sView/91">쿨타임 쿨스카프 넥쿨러 아이스 목튜브 얼음목걸이</a></h6>
+                            <div class="org_price">
+                                <del>18000</del>
+                                <span>
+                                    45%
+                                </span>
+                            </div>
+                            <div class="dis_price">
+                                <ins>
+                                    9900
+                                </ins>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fast-food">
+                <div class="featured__item">
+                    <a href="/sView/76">
+                        <div class="featured__item__pic set-bg" data-setbg="/product/73105be9_20230728.gif"></div>
+                    </a>
+                    <div class="featured__item__text">
+                        <h6><a href="/sView/76">한우 소곱창구이 대창 막창 염통 특양 초벌 밀키트</a></h6>
+                        <div class="org_price">
+                            <del>11900</del>
+                            <span>
+                                    15%
+                                </span>
+                        </div>
+                        <div class="dis_price">
+                            <ins>
+                                10115
+                            </ins>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fast-food">
+                <div class="featured__item">
+                    <a href="/sView/69">
+                        <div class="featured__item__pic set-bg" data-setbg="/product/883172d1_메인.jpg"></div>
+                    </a>
+                    <div class="featured__item__text">
+                        <h6><a href="/sView/69">할머니가 말아주시는 손말이고기</a></h6>
+                        <div class="org_price">
+                            <del>56340</del>
+                            <span>
+                                    70%
+                                </span>
+                        </div>
+                        <div class="dis_price">
+                            <ins>
+                                16902
+                            </ins>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fast-food">
+                <div class="featured__item">
+                    <a href="/sView/85">
+                        <div class="featured__item__pic set-bg" data-setbg="/product/de2caacb_탄산메인.jpg"></div>
+                    </a>
+                    <div class="featured__item__text">
+                        <h6><a href="/sView/85">몽베스트 탄산수 라임+레몬 500mL</a></h6>
+                        <div class="org_price">
+                            <del>25000</del>
+                            <span>
+                                    50%
+                                </span>
+                        </div>
+                        <div class="dis_price">
+                            <ins>
+                                12500
+                            </ins>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fast-food">
+                <div class="featured__item">
+                    <a href="/sView/92">
+                        <div class="featured__item__pic set-bg" data-setbg="/product/fb716298_콤부메인.png"></div>
+                    </a>
+                    <div class="featured__item__text">
+                        <h6><a href="/sView/92">티젠 콤부차 챌린지</a></h6>
+                        <div class="org_price">
+                            <del>42000</del>
+                            <span>
+                                    47%
+                                </span>
+                        </div>
+                        <div class="dis_price">
+                            <ins>
+                                22260
+                            </ins>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- Featured Section End -->
+
+
+<!-- Footer 시작했다~ -->
+
+<footer class="footer spad">
+    <div class="col-lg-12">
+        <div class="footer__widget">
+            <h6></h6>
+            <a><a href="#">회사소개</a></a>&nbsp;&nbsp;
+            <a><a href="#">이용약관</a></a>&nbsp;&nbsp;
+            <a><a href="#">개인정보처리방침</a></a>&nbsp;&nbsp;
+            <a><a href="#">FAQ</a></a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="footer__about">
+                    <div class="footer__about__logo">
+                        <a href=""><img src="/img/공구의숲 로고3.png" alt=""></a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
+                <div class="footer__widget">
+                    <h5 class="mb-12"><b class="fs-14px">고객센터 1234-5678</b></h5>
+                    <a>평일 AM 10:00 ~ PM 5:00</p></a>
+                    <a>점심시간 PM 12:30 ~ PM 13:30</p></a>
+                    <a>주말 및 공휴일 휴무</p></a>
+                    <a>계좌번호 NH농협 000-0000-000-00</p></a>
+                    <a>문의메일 Kimmango@naver.com</p></a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+                <div class="footer__widget">
+                    <a>대표자.김망고</a></br>
+                    <a>사업자등록번호.1234567890</a></br>
+                    <a>주소. 인천광역시 미추홀구 한나루로 453</a></br>
+                    <a>TEL.032-1234-5678</a></br>
+                    <a>Email. hello@colorlib.com</a>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="footer__copyright">
+                    <div class="footer__copyright__text">
+                        <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+                            All rights reserved | This template is made with <i class="fa fa-heart"
+                                                                                aria-hidden="true"></i> by <a
+                                    href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer 끝났다~ -->
+
+<!-- Js Plugins -->
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery-ui.min.js"></script>
+<script src="/js/jquery.slicknav.js"></script>
+<script src="/js/mixitup.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+        crossorigin="anonymous"></script>
+<script>
+
+    let id = "[[${session.loginId}]]";
+
+    // 회원가입
+    $('#join').click(function () {
+        location.href = "/joinForm";
+    });
+
+    // 카카오로그아웃
+    $('#klogout').click(function () {
+        location.href = "/klogout";
+    });
+
+    // 회원목록
+    $('#mList').click(function () {
+        location.href = "/mList";
+    });
+
+    // 로그인
+    $('#login').click(function () {
+        location.href = "/loginForm";
+    });
+
+    // 내정보
+    $('#mypage').click(function () {
+        location.href = "/mView/[[${session.loginId}]]";
+    });
+
+    // 찜목록
+    $('#likeList').click(function () {
+        if (id == "") {
+            alert('로그인 후 이용해주세요!')
+            location.href = ""
+        }
+        if (id != "") {
+            location.href = "/likeList/[[${session.loginId}]]";
+        }
+    });
+
+    // 장바구니 목록
+    $('#ctlist').click(function () {
+        if (id == "") {
+            alert('로그인 후 이용해주세요!')
+            location.href = ""
+        }
+        if (id != "") {
+            location.href = "/ctlist";
+        }
+    });
+
+    // 로그아웃
+    $('#logout').click(function () {
+        location.href = "/mLogout";
+    });
+
+    // 신청페이지
+    $('#request').click(function () {
+        location.href = "/requestForm";
+    });
+
+    // 신청목록
+    $('#rqList').click(function () {
+        location.href = "/rqList";
+    });
+
+    // 회사목록
+    $('#cList').click(function () {
+        location.href = "/cList";
+    });
+
+    // 상품목록
+    $('#pList').click(function () {
+        location.href = "/pList";
+    });
+
+    // 판매목록
+    $('#sList').click(function () {
+        location.href = "/sList";
+    });
+
+    $('#request').click(function () {
+        if (id == "") {
+            alert('로그인 후 이용해주세요!')
+            location.href = "redirect:/loginForm"
+        }else {
+            location.href = "requestForm";
+        }
+    });
+
+    $('#rqList').click(function () {
+        location.href = "/rqList";
+    });
+
+    $('.psList').click(function () {
+        location.href = "/psList";
+    });
+
+    $('.psList').click(function () {
+        if (id == "") {
+            alert('로그인 후 이용해주세요!')
+            location.href = "redirect:/loginForm"
+        }else {
+            location.href = "/psList";
+        }
+    });
+
+    // 카카오인증버튼
+    $('#kLogin').click(function () {
+        location.href = "";
+    });
+
+</script>
+
+</html>

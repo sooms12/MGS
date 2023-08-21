@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icia.mgs.dao.PLikeDAO">
+
+    <select id="likeup1" parameterType="plike">
+        INSERT INTO PLIKE (LNUM, MID, SNUM, PNUM) VALUES  (PLIKE_SEQ.NEXTVAL, #{mId} , #{sNum} , #{pNum})
+    </select>
+
+    <select id="likedown1" parameterType="plike">
+        DELETE FROM PLIKE WHERE SNUM = #{sNum} AND MID = #{mId}
+    </select>
+
+    <select id="findid">
+        SELECT * FROM PLIKE WHERE SNUM = #{sNum} AND MID = #{mId}
+    </select>
+
+    <select id="findBymId">
+        SELECT * FROM PLIKE WHERE MID = #{mId}
+    </select>
+
+    <select id="plist" resultType="plike">
+        SELECT * FROM PLIKE WHERE MID = #{mId}
+    </select>
+
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icia.mgs.dao.pCommentDAO">
+
+    <!--  문의글 불러오기  -->
+    <select id="cmList" parameterType="pco" resultType="pco">
+        SELECT * FROM  PCOMMENT WHERE SNUM = #{sNum} AND PCTYPE = #{pcType} ORDER BY pcNum DESC
+    </select>
+
+    <!--  리뷰 불러오기  -->
+    <select id="rvList" parameterType="pco" resultType="pco">
+        SELECT * FROM  PCOMMENT WHERE SNUM = #{sNum} AND PCTYPE = #{pcType} ORDER BY pcNum DESC
+    </select>
+
+
+
+</mapper>

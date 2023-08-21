@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icia.mgs.dao.RequestDAO">
+
+    <select id="rqSearchList" parameterType="search" resultType="request">
+        SELECT * FROM REQUEST WHERE ${category} LIKE '%${keyword}%'
+    </select>
+
+    <select id="rqSearchList2" resultType="request">
+        SELECT * FROM REQUEST WHERE ${search.category}
+            LIKE '%' || '${search.keyword}' || '%'
+                                AND MID = #{mId}
+    </select>
+
+    <select id="typechange">
+        UPDATE REQUEST SET RQTYPE = '처리중' WHERE RQNUM = #{rqNum}
+    </select>
+
+</mapper>

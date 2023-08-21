@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="bro">
+    <meta name="date" content="">
+    <meta name="description" content="">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon">
+    <title>주문내역/배송현황</title>
+</head>
+<body>
+<h2>주문 내역</h2>
+<table>
+        <tr>
+            <th>주문번호</th>
+            <th>구매자 ID</th>
+            <th>수량</th>
+            <th>결재일자</th>
+            <th>결재상태</th>
+        </tr>
+        <tr th:each="list : ${list}">
+            <td th:text="${list.oNum}"></td>
+            <td th:text="${list.mId}"></td>
+            <td th:text="${list.oCount}"></td>
+            <td th:text="${list.oDate} "></td>
+            <td th:text="${list.oState} "></td>
+            <td th:if="${list.oPay==0}"> <a th:href="|/rePay/${list.oNum}|">결제하기</a> </td>
+            <td th:if="${list.oPay==1}">결제완료</td>
+        </tr>
+    </table>
+</body>
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.js"
+        integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+        crossorigin="anonymous">
+</script>
+<!-- 포트원 라이브러리(결제) -->
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script>
+
+</script>
+
+</html>

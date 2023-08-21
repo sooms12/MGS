@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <title></title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    <!-- summernote -->
+    <link rel="stylesheet" href="/css/summernote/summernote-lite.css">
+
+    <link rel="shortcut icon" href="/img/banner/파비콘.png" type="image/x-icon">
+
+    <style>
+
+
+    </style>
+</head>
+
+<body>
+
+<div class="container mt-3">
+    <br>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="rvl" data-bs-toggle="tab" href="#home">리뷰</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="qna" data-bs-toggle="tab" href="#menu1">상품문의</a>
+        </li>
+    </ul>
+
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div id="home" class="container tab-pane active"><br>
+            <div class="col-lg-12 col-md-1">
+                <ul class="list-group list-group-flush">
+
+
+                    <div th:if="${session.loginId ne null || session.loginId eq 'admin' }">
+
+                        <div style="text-align: right">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                리뷰 작성
+                            </button>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">리뷰 작성</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body" style="height: 300px;">
+                                        <form action="/rvWrite" method="post" enctype="multipart/form-data">
+                                            <div id="rvWriteArea">
+                                                <div>
+                                                    <div>
+                                                        <input type="hidden" th:value="${session.loginId}" name="mId"
+                                                               id="mId">
+                                                        <input type="hidden" th:value="0" name="pcType">
+                                                        <input type="hidden" th:value="0" name="qcType">
+                                                        <input type="hidden" th:value="${view.sNum}" name="sNum" id="sNum">
+                                                        <textarea row="10" cols="50" required onfocus="checkPrvView()"
+                                                                  name="pcComment"
+                                                                  id="pcComment"
+                                                                  placeholder="리뷰를 작성해주세요."></textarea><br/>
+                                                    </div>
+
+                                                    <div class="col-lg-10">
+                                                        <div class="row">
+
+                                                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                                                <img id="pcPicName1" width="80px" height="80px"
+                                                                     class="float">
+                                                                <input type="file" name="pcFile" id="pcFile1" class="float">
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                                                <img id="pcPicName2" width="80px" height="80px"
+                                                                     class="float">
+                                                                <input type="file" name="pcFile" id="pcFile2" class="float">
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                                                <img id="pcPicName3" width="80px" height="80px"
+                                                                     class="float">
+                                                                <input type="file" name="pcFile" id="pcFile3" class="float">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Close
+                                                        </button>
+                                                        <input type="submit" value="리뷰 작성" class="btn btn-success">
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="container mt-3">
+                        <div id="cmtArea">
+
+                        </div>
+                    </div>
+                </ul>
+                <div style="padding-left: 44%; padding-right: 56%;">
+                    <ul class="pagination" id="rnumbering">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="menu1" class="container tab-pane fade"><br>
+            <ul class="list-group list-group-flush">
+
+                <div style="text-align: right" th:if="${session.loginId ne null || session.loginId eq 'admin'}">
+                    <!-- Button trigger modal -->
+                    <button type="button" style="width: 110px; text-align: right;" class="btn btn-success" data-bs-toggle="modal"
+                            data-bs-target="#qwModal">
+                        문의글 작성
+                    </button>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="qwModal" tabindex="-1" aria-labelledby="qwModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="qwModalLabel">상품 문의</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/qaWrite" method="post">
+                                    <div id="pQaWrite">
+                                        <div>
+                                            <div>
+                                                <select name="qcType">
+                                                    <option value="1">[상품]</option>
+                                                    <option value="2">[배송]</option>
+                                                    <option value="3">[취소/교환/반품]</option>
+                                                </select>
+                                            </div>
+                                            <input type="hidden" name="mId" th:value="${session.loginId}">
+                                            <input type="hidden" name="sNum" th:value="${view.sNum}">
+                                            <input type="hidden" name="pcType" th:value="1" id="qaPcType">
+                                            <textarea rows="10" cols="60" required name="pcComment" id="pQComment"
+                                                      placeholder="문의 내용을 작성해주세요."></textarea><br/>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <input class="btn btn-outline-success" type="submit" value="문의글 등록"><br/>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="qmtArea">
+
+                </div>
+            </ul>
+            <div class="col-lg-12" style="padding-left: 44%; padding-right: 56%;">
+                <ul class="pagination" id="qnumbering">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 리뷰 수정 모달창 -->
+<div id="rvmModal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="modi-modal-content">
+
+                <!-- 모달창 내용을 작성하세요 -->
+                <!-- 수정 폼을 여기에 넣어서 표시합니다 -->
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 문의글 수정 모달창 -->
+<div id="qaModal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="qaModal-modal-content">
+
+                <!-- 모달창 내용을 작성하세요 -->
+                <!-- 수정 폼을 여기에 넣어서 표시합니다 -->
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 문의글 답글 작성 모달창 -->
+<div id="rwModal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="rwModal-modal-content">
+
+                <!-- 모달창 내용을 작성하세요 -->
+                <!-- 수정 폼을 여기에 넣어서 표시합니다 -->
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 문의글 답글 수정 모달창 -->
+<div id="rmModal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="rmModal-modal-content">
+
+                <!-- 모달창 내용을 작성하세요 -->
+                <!-- 수정 폼을 여기에 넣어서 표시합니다 -->
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+        crossorigin="anonymous"></script>
+<script>
+
+    let page = 1;       // 페이지 번호
+    let limit = 5;      // 한페이지에 출력될 데이터 갯수
+    const block = 5;    // 한페이지에 출력될 페이지 갯수
+    let count = 0;      // 전체 데이터 갯수
+    let list = [];      // 데이터를 담을 변수
+
+
+    // 사진 미리보기
+    $('#pcFile1').on("change", function (event) {
+
+
+        let file = event.target.files[0];
+
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#pcPicName1').attr("src", e.target.result);
+        }
+
+        reader.readAsDataURL(file);
+
+    });
+
+    // 사진 미리보기
+    $('#pcFile2').on("change", function (event) {
+
+        let file = event.target.files[0];
+
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#pcPicName2').attr("src", e.target.result);
+        }
+
+        reader.readAsDataURL(file);
+
+    });
+
+    // 사진 미리보기
+    $('#pcFile3').on("change", function (event) {
+
+        let file = event.target.files[0];
+
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#pcPicName3').attr("src", e.target.result);
+        }
+
+        reader.readAsDataURL(file);
+
+    });
+
+
+    //  전역 변수 선언
+    let sNum = [[${view.sNum}]];
+    let pcType = 0;
+    let mId = '[[${session.loginId}]]';
+    console.log('sNum : ' + sNum);
+    console.log('mId : ' + mId);
+
+
+    // rvList : 리뷰 불러오기
+    $.ajax({
+        type: "POST",
+        url: "/rvList",
+        data: {
+            "sNum": sNum,
+            "pcType": 0
+        },
+        dataType: "json",
+        success: function (result) {
+            rlist = result;
+            console.log('리뷰 불러오기 rlist : ');
+            console.log(rlist);
+
+            rvtList(page, rlist);
+        },
+        error: function () {
+            alert('리뷰 불러오기 통신 실패');
+        }
+    });
+
+
+    let rlist = [];      // 데이터를 담을 변수
+
+
+    // 리뷰 리스트 출력 함수
+    function rvtList(page, rlist) {
+
+        console.log('리뷰 출력 함수 rlist : ');
+        console.log(rlist);
+
+        console.log("날짜타입");
+        console.log(rlist[0].pcDate);
+        console.log(typeof(rlist[0].pcDate));
+
+        count = rlist.length;
+
+        let maxPage = Math.ceil(count / limit);
+
+        if (page > maxPage) {
+            page = maxPage;
+        }
+
+        let startRow = (page - 1) * limit;  // 0 5 10
+        let endRow = page * limit - 1;      // 4 9 14
+
+        if (endRow >= count) {
+            endRow = count - 1;
+        }
+
+        let startPage = (Math.ceil(page / block) - 1) * block + 1;  // 1 1 1 1 1 6
+        let endPage = startPage + block - 1;                    // 5 5 5 5 5 10
+
+        if (endPage > maxPage) {
+            endPage = maxPage;
+        }
+
+        console.log('rvtList 실행!');
+
+        let output = "";
+
+
+        for (let i = startRow; i <= endRow; i++) {
+
+
+            console.log('rlist : ' + rlist);
+
+            let ppNum = rlist[i].pcNum;
+            console.log('ppNum : ' + ppNum);
+
+            let pppNum = 'rcId' + ppNum;
+
+            output += "<li class=\"list-group-item\">";
+
+            output += "<div id='" + pppNum + "'>";
+            output += "<div>";
+            output += "<span>" + rlist[i].mId +"&nbsp;&nbsp;&nbsp; 작성일&nbsp;&nbsp;:&nbsp;&nbsp;"+ rlist[i].pcDate + "</span>";
+            output += "</div>";
+            output += "<div>";
+            output += "<p>" + rlist[i].pcComment + "</p>";
+            output += "</div>";
+
+            let pcPicName1 = rlist[i].pcPicName1;
+            let pcPicName2 = rlist[i].pcPicName2;
+            let pcPicName3 = rlist[i].pcPicName3;
+
+            console.log('pcPicName1 : ' + pcPicName1);
+            console.log('pcPicName2 : ' + pcPicName2);
+            console.log('pcPicName3 : ' + pcPicName3);
+
+            if (pcPicName1 != null) {
+
+                output += "<img src='/review/" + rlist[i].pcPicName1 + "' width=\"200px\" height='150px'>";
+
+            }
+            if (pcPicName2 != null) {
+
+                output += "<img src='/review/" + rlist[i].pcPicName2 + "' width=\"200px\" height='150px'>";
+
+            }
+            if (pcPicName3 != null) {
+
+                output += "<img src='/review/" + rlist[i].pcPicName3 + "' width=\"200px\" height='150px'>";
+
+            }
+
+
+            if (mId == rlist[i].mId || mId == 'admin') {
+
+                output += "<div style='text-align: right' class='right-down'><button class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#rvmModal\" onclick=\"rvModiForm('" + rlist[i].pcNum + "','" + rlist[i].pcComment + "','" + pcPicName1 + "','" + pcPicName2 + "','" + pcPicName3 + "')\">수정</button><button class=\"btn btn-danger\" onclick=\"rvDelete('" + rlist[i].pcNum + "','" + pcPicName1 + "','" + pcPicName2 + "','" + pcPicName3 + "')\">삭제</button></div>";
+
+            }
+
+
+            output += "</div>";
+            output += "</li>";
+        }
+
+
+        console.log(output);
+        $('#cmtArea').empty();
+        $('#cmtArea').append(output);
+
+
+        let pageNum = "";
+        let rprev = (page - 1 < 1 ? 1 : page - 1);
+        let rnext = (page + 1 >= maxPage ? maxPage : page + 1);
+
+        // [이전] 버튼
+        if (page <= 1) {
+            pageNum += `<li class="page-item iNum page-link">\<</li>`;
+        } else {
+            pageNum += `<li class="page-item"><a class="prev page-link" href="#rvl" data-page="${rprev}">\< </a></li>`;
+        }
+
+        // [번호] 버튼
+        for (let i = startPage; i <= endPage; i++) {
+            if (page == i) {
+                pageNum += `<li class="page-item active"><a class="iNum page-link">${i}</a></li>`;
+                continue;
+            }
+            pageNum += `<li class="page-item"><a class="iNum page-link" href="#rvl" data-page="${i}">${i}</a></li>`;
+        }
+
+        // [다음] 버튼
+        if (page >= maxPage) {
+            pageNum += `<li class="page-item iNum page-link">\></li>`;
+        } else {
+            pageNum += `<li class="page-item"><a class="next page-link" href="#rvl" data-page="${rnext}">\> </a></li>`;
+        }
+
+        $('#rnumbering').empty();
+        $('#rnumbering').append(pageNum);
+
+        // [이전] [번호] [다음] 클릭시
+        $(document).on("click", "#rnumbering a", function (e) {
+            page = parseInt($(this).data('page'));
+            rvtList(page, rlist);
+        });
+
+    }
+
+
+    // checkPrvView 함수 적용
+    function checkPrvView() {
+
+        // rvpCheck : 결제 유무 체크
+        $.ajax({
+            type: "GET",
+            url: "/rvpCheck",
+            data: {
+                "sNum": sNum,
+                "mId": mId
+            },
+            dataType: "text",
+            success: function (check) {
+                console.log('check : ' + check);
+                if (check == 'NO') {
+                    $('#pcComment').blur();
+                    alert('구매하신 상품만 리뷰를 작성할 수 있습니다.');
+                }
+            },
+            error: function () {
+                alert('결제 확인 통신 실패');
+            }
+        });
+    }
+
+
+
+
+    // 리뷰 수정 모달창 닫기
+    function closeModal() {
+        $('#rvmModal').hide();
+    }
+
+    // 리뷰 수정 폼 보여주기
+    function rvModiForm(pcNum, pcComment, pPicName1, pPicName2, pPicName3) {
+        // ... 이전 코드 ...
+        console.log('리뷰 수정 수정폼 pcNum :' + pcNum);
+        console.log('리뷰 수정 수정폼 pcComment : ' + pcComment);
+        console.log('리뷰 수정 수정폼 pPicName1 : ' + pPicName1);
+        console.log('리뷰 수정 수정폼 pPicName2 : ' + pPicName2);
+        console.log('리뷰 수정 수정폼 pPicName3 : ' + pPicName3);
+
+
+        let output1 = "";
+
+
+
+        output1 += "<div class=\"modal-header\">";
+        output1 += "<h1 class=\"modal-title fs-5\" id=\"rvmModalLabel\">리뷰 수정</h1>";
+        output1 += "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>";
+        output1 += "</div>";
+        output1 += "<div class=\"modal-body\">";
+        output1 += "<form id='modiForm' enctype='multipart/form-data' >";
+        output1 += "<div>";
+        output1 += "<div>";
+        output1 += "<input type='hidden' value='" + pcNum + "' name='pcNum'/>";
+        output1 += "<input type='hidden' value='" + pcType + "' name='pcType'/>";
+        output1 += "<input type='hidden' value='0' name='qcType'/>";
+        output1 += "<input type='hidden' value='" + sNum + "' name='sNum'/>";
+        output1 += "<input type='hidden' value='" + mId + "' name='mId'/>";
+        output1 += "<textarea row=\"20\" cols=\"40\" name='pcComment' id='mdComment'>" + pcComment + "</textarea>";
+        output1 += "<div class=\"col-lg-8\">";
+        output1 += "<div class=\"row\">";
+        output1 += "<div class=\"col-lg-4 col-md-6 col-sm-6\">";
+        output1 += "<input type='file' name='pcFile' id='mpcFile1'><br/><img src='/review/" + pPicName1 + "' id='mpcFile1Name' width='150px'><input type='hidden' name='pcPicName1' value='" + pPicName1 + "'>";
+        output1 += "</div>";
+        output1 += "<div class=\"col-lg-4 col-md-6 col-sm-6\">";
+        output1 += "<input type='file' name='pcFile' id='mpcFile2'><br/><img src='/review/" + pPicName2 + "' id='mpcFile2Name'  width='150px'><input type='hidden' name='pcPicName2' value='" + pPicName2 + "'>";
+        output1 += "</div>";
+        output1 += "<div class=\"col-lg-4 col-md-6 col-sm-6\">";
+        output1 += "<input type='file' name='pcFile' id='mpcFile3'><br/><img src='/review/" + pPicName3 + "' id='mpcFile3Name'  width='150px'><input type='hidden' name='pcPicName3' value='" + pPicName3 + "'>";
+        output1 += "</div>";
+        output1 += "</div>";
+        output1 += "</div>";
+        output1 += "</div>";
+
+        output1 += "<div class=\"modal-footer\">";
+        output1 += "<button type=\"button\" class=\"btn btn-secondary\" data-bs-dismiss=\"modal\">Close</button>";
+        output1 += "<button class='btn btn-primary' id='modiBtn' data-bs-dismiss=\"modal\" type='button' >수정</button>";
+        output1 += "</div>";
+        output1 += "</div>";
+        output1 += "</form>";
+
+
+        // 모달창에 폼을 추가하여 보여줍니다.
+        $('#modi-modal-content').html(output1);
+    }
+
+
+    // 모달 창 사진 미리보기
+    $(function () {
+        //처음 이미지 가져오기
+        let photo_path = $('.profile-photo').attr('src');
+        let my_photo; //회원이 업로드할 이미지 담을 변수
+        $('.upload').change(function () {
+            my_photo = this.files[0];
+            if (!my_photo) {
+                $('.profile-photo').attr('src', photo_path);
+                return
+            }
+            //이미지 미리보기 처리
+            let reader = new FileReader();
+            reader.readAsDataURL(my_photo);
+
+            reader.onload = function () {
+                $('.profile-photo').attr('src', reader.result);
+            };
+        });
+    });
+
+    // 리뷰 수정 버튼 클릭 처리
+    $(function () {
+        $(document).on('click', '#modiBtn', function () {
+            // 모달창 닫기
+            closeModal();
+
+            // 리뷰 수정 처리 함수 호출 (서버로 폼 데이터 전송 등)
+            rvModify();
+        });
+
+
+        // 저장된 파일 변수 추가
+        let storedFile = null;
+
+        $(document).on('change', '#mpcFile1', function (event) {
+            console.log('사진 변경');
+            let file = event.target.files[0];
+
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                $('#mpcFile1Name').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(file);
+
+            // 선택한 파일을 저장
+            storedFile = file;
+
+        });
+
+        $(document).on('change', '#mpcFile2', function (event) {
+            console.log('사진 변경');
+            let file = event.target.files[0];
+
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                $('#mpcFile2Name').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(file);
+
+            // 선택한 파일을 저장
+            storedFile = file;
+
+        });
+
+        $(document).on('change', '#mpcFile3', function (event) {
+            console.log('사진 변경');
+            let file = event.target.files[0];
+
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                $('#mpcFile3Name').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(file);
+
+            // 선택한 파일을 저장
+            storedFile = file;
+
+        });
+
+    });
+
+
+
+
+    // rvModify : 리뷰 수정
+    function rvModify() {
+
+        let form = $('#modiForm')[0];
+        let formData = new FormData(form);
+
+        $.ajax({
+            url: "/rvModify",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                list = result;
+                rvtList(page, list);
+            },
+            error: function () {
+                alert('리뷰 수정 통신 실패');
+            }
+        });
+
+    }
+
+
+    // rvDelete : 리뷰 삭제
+    function rvDelete(pcNum, pcPicName1, pcPicName2, pcPicName3) {
+
+        console.log('리뷰 삭제 pcNum : ' + pcNum);
+        console.log('리뷰 삭제 pcPicName1 : ' + pcPicName1);
+        console.log('리뷰 삭제 pcPicName2 : ' + pcPicName2);
+        console.log('리뷰 삭제 pcPicName3 : ' + pcPicName3);
+
+        const data = {
+            pcNum: pcNum,
+            sNum: sNum,
+            pcPicName1: pcPicName1,
+            pcPicName2: pcPicName2,
+            pcPicName3: pcPicName3,
+            pcType: pcType
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/rvDelete",
+            data: data,
+            success: function (result) {
+                console.log(result);
+                rlist = result
+                alert('리뷰가 삭제되었습니다.');
+                rvtList(page,rlist);
+            },
+            error: function () {
+                alert('리뷰 삭제  통신 실패');
+            }
+        });
+
+    }
+
+
+    let qaPcType = $('#qaPcType').val();
+
+    // qaList : 문의글 불러오기
+    $.ajax({
+        type: "POST",
+        url: "/qaList",
+        data: {
+            "sNum": sNum,
+            "pcType": qaPcType
+        },
+        dataType: "json",
+        success: function (result) {
+            qlist = result;
+            console.log('문의글 불러오기 list :');
+            console.log(qlist);
+
+            qatList(page, qlist);
+        },
+        error: function () {
+            alert('문의글 불러오기 통신 실패');
+        }
+    });
+
+
+    let qlist = [];      // 데이터를 담을 변수
+
+    // 문의글 리스트 출력 함수
+    function qatList(page, qlist) {
+        count = qlist.length;
+
+        let maxPage = Math.ceil(count / limit);
+
+        if (page > maxPage) {
+            page = maxPage;
+        }
+
+        let startRow = (page - 1) * limit;  // 0 5 10
+        let endRow = page * limit - 1;      // 4 9 14
+
+        if (endRow >= count) {
+            endRow = count - 1;
+        }
+
+        let startPage = (Math.ceil(page / block) - 1) * block + 1;  // 1 1 1 1 1 6
+        let endPage = startPage + block - 1;                    // 5 5 5 5 5 10
+
+        if (endPage > maxPage) {
+            endPage = maxPage;
+        }
+
+        console.log('qatList 실행!');
+
+        let output = "";
+
+
+        for (let i = startRow; i <= endRow; i++) {
+
+
+            console.log('qlist : ' + qlist);
+
+            let ppNum = qlist[i].pcNum;
+            let qType = qlist[i].qcType;
+            console.log('ppNum : ' + ppNum);
+            console.log('qType : ' + qType);
+
+
+            output += "<li class=\"list-group-item\">";
+            output += "<div id='qcId'>";
+            output += "<div>";
+            output += "<span>" + qlist[i].mId +"&nbsp;&nbsp;&nbsp; 작성일&nbsp;&nbsp;:&nbsp;&nbsp;"+ qlist[i].pcDate + "</span>";
+            output += "</div>";
+
+
+            if (qType == 1) {
+                output += "<div>";
+                output += "<p><span>[상품]</span>" + qlist[i].pcComment + "</p>";
+                output += "</div>";
+            }
+
+            if (qType == 2) {
+                output += "<div>";
+                output += "<p><span>[배송]</span>" + qlist[i].pcComment + "</p>";
+                output += "</div>";
+            }
+
+            if (qType == 3) {
+                output += "<div>";
+                output += "<td colspan='3'><span>[취소/교환/반품]</span>" + qlist[i].pcComment + "</td>";
+                output += "</div>";
+            }
+
+
+            if (mId == qlist[i].mId || mId == 'admin') {
+                output += "<div style='text-align: right' class='right-down'><button class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#qaModal\" onclick=\"qnModiForm('" + qlist[i].pcNum + "','" + qlist[i].pcComment + "','" + qlist[i].qcType + "','" + qlist[i].pcType + "')\">수정</button><button class='btn btn-danger' onclick=\"qnDelete('" + qlist[i].pcNum + "','" + qlist[i].pcType + "')\">삭제</button></div>";
+                output += "</div>";
+                output += "</br>";
+            } else {
+                output += "</div>";
+                output += "</br>";
+            }
+
+            output += "<div id=\"reId" + ppNum + "\">";
+            output += "<button class=\"btn btn-light\" data-bs-toggle=\"modal\" data-bs-target=\"#rwModal\" onclick=\"reWriteForm('" + qlist[i].pcNum + "')\">답변 작성</button>";
+            output += "</div>";
+            output += "</br>";
+
+            // 답글 출력 영역
+
+            output += "</div>";
+            output += "</li>";
+
+        }
+
+
+        console.log(output);
+        $('#qmtArea').empty();
+        $('#qmtArea').append(output);
+
+
+        let pageNum = "";
+        let qprev = (page - 1 < 1 ? 1 : page - 1);
+        let qnext = (page + 1 >= maxPage ? maxPage : page + 1);
+
+        // [이전] 버튼
+        if (page <= 1) {
+            pageNum += `<li class="page-item iNum page-link">\<</li>`;
+        } else {
+            pageNum += `<li class="page-item"><a class="prev page-link" href="#qna" data-page="${qprev}">\< </a></li>`;
+        }
+
+        // [번호] 버튼
+        for (let i = startPage; i <= endPage; i++) {
+            if (page == i) {
+                pageNum += `<li class="page-item active"><a class="iNum page-link">${i}</a></li>`;
+                continue;
+            }
+            pageNum += `<li class="page-item"><a class="iNum page-link" href="#qna" data-page="${i}">${i}</a></li>`;
+        }
+
+        // [다음] 버튼
+        if (page >= maxPage) {
+            pageNum += `<li class="page-item iNum page-link">\></li>`;
+        } else {
+            pageNum += `<li class="page-item"><a class="next page-link" href="#qna" data-page="${qnext}">\> </a></li>`;
+        }
+
+        $('#qnumbering').empty();
+        $('#qnumbering').append(pageNum);
+
+        // [이전] [번호] [다음] 클릭시
+        $(document).on("click", "#numbering a", function (e) {
+            page = parseInt($(this).data('page'));
+            qatList(page, qlist);
+        });
+
+    }
+
+
+    // 문의글 삭제
+    function qnDelete(pcNum, pcType) {
+        console.log('문의글 삭제 pcNum : ' + pcNum);
+        console.log('문의글 삭제 pcType : ' + pcType);
+
+
+        $.ajax({
+            type: "POST",
+            url: "/qaDelete",
+            data: {
+                "pcNum": pcNum,
+                "sNum": sNum,
+                "pcType": pcType
+            },
+            dataType: "json",
+            success: function (result) {
+                console.log(result);
+                list = result;
+                alert('문의글이 삭제되었습니다.');
+
+                location.href = "/sView/" + sNum;
+
+            },
+            error: function () {
+                alert('문의글 삭제  통신 실패');
+            }
+        });
+    }
+
+
+
+
+
+
+    // qnModiForm : 문의글 수정 폼
+    function qnModiForm(pcNum, pcComment, qcType, pcType) {
+
+        console.log('문의글 수정폼 pcNum : ' + pcNum);
+        console.log('문의글 수정폼 pcComment : ' + pcComment);
+        console.log('문의글 수정폼 qcType : ' + qcType);
+        console.log('문의글 수정폼 pcType : ' + pcType);
+
+        let output = "";
+
+        output += "<div class=\"modal-header\">";
+        output += "<h1 class=\"modal-title fs-5\" id=\"qaModalLabel\">문의글 수정</h1>";
+        output += "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>";
+        output += "</div>";
+        output += "<div class=\"modal-body\">";
+        output += "<form action='/qaModify' name='qaModifyForm' method='POST'>";
+        output += "<input type='hidden' value=" + pcNum + " name='pcNum' id='pcNum'/>";
+        output += "<input type='hidden' value=" + pcType + " name='pcType' id='pcType'/>";
+        output += "<input type='hidden' value=" + qcType + " id='qcType' name='qcType'/>";
+        output += "<input type='hidden' value=" + sNum + " name='sNum'/>";
+        output += "<input type='hidden' value='" + mId + "' name='mId'/>";
+        output += "<textarea row=\"10\" cols=\"60\" name='pcComment' id='qmComment'>" + pcComment + "</textarea>";
+        output += "</div>";
+        output += "<div class='modal-footer'>";
+        output += "<button type=\"button\" class=\"btn btn-secondary\" data-bs-dismiss=\"modal\">Close</button>";
+        output += "<button class='btn btn-primary' data-bs-dismiss=\"modal\" type='button' onclick='qaModify()'>수정</button>";
+        output += "</div>";
+        output += "</form>";
+
+        // 모달창에 폼을 추가하여 보여줍니다.
+        $('#qaModal-modal-content').html(output);
+
+
+    }
+
+    // 문의글 수정 submit
+    function qaModify(){
+        qaModifyForm.submit();
+    }
+
+
+
+
+    // reWriteForm : 문의글 답글 작성폼
+    function reWriteForm(pcNum) {
+
+        console.log('문의글 답글 작성폼 pcNum : ' + pcNum);
+
+
+        let output = "";
+
+        output += "<div class=\"modal-header\">";
+        output += "<h1 class=\"modal-title fs-5\" id=\"reModalLabel\">답글 작성</h1>";
+        output += "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>";
+        output += "</div>";
+        output += "<div class=\"modal-body\">";
+        output += "<form action='/reWrite' name='reWritefForm' method='POST'>";
+        output += "<input type='hidden' value=" + pcNum + " name='pcNum'/>";
+        output += "<input type='hidden' value=" + sNum + " name='sNum'/>";
+        output += "<input type='hidden' value='" + mId + "' name='mId'/>";
+        output += "<textarea row=\"10\" cols=\"50\" name='reComment' id='reComment'></textarea>";
+        output += "</div>";
+        output += "<div class=\"modal-footer\">";
+        output += "<button type=\"button\" class=\"btn btn-secondary\" data-bs-dismiss=\"modal\">Close</button>";
+        output += "<button class='btn btn-primary' data-bs-dismiss='modal' type='button' onclick='reWrite()'>작성</button>";
+        output += "</div>";
+        output += "</form>";
+
+        // 모달창에 폼을 추가하여 보여줍니다.
+        $('#rwModal-modal-content').html(output);
+
+
+    }
+
+    // 답글 작성 폼 submit
+    function reWrite(){
+        reWritefForm.submit();
+    }
+
+
+
+    $(function () {
+
+        // reList : 답글 불러오기
+        $.ajax({
+            type: "POST",
+            url: "/reList",
+            data: {
+                "sNum": sNum
+            },
+            dataType: "json",
+            success: function (list) {
+                console.log('답글 불러오기 list : ');
+                console.log(list);
+
+                retList(list);
+            },
+            error: function () {
+                alert('답글 불러오기 통신 실패');
+            }
+        });
+
+
+        // 답글 출력 함수
+        function retList(list) {
+
+            console.log('답글 불러오기 list : ');
+            console.log(list);
+
+
+            for (let i in list) {
+
+                let output = "";
+
+
+                output += "<ul class=\"list-group list-group-flush\">";
+                output += "<li class=\"list-group-item\">";
+                output += "<div>";
+
+                output += "<div><span>↘답</span></div>";
+
+                output += "<div>";
+                output += "<span>" + list[i].mId + list[i].reDate + "</span>";
+                output += "</div>";
+
+                output += "<div>";
+                output += "<p>" + list[i].reComment + "</p>";
+                output += "</div>";
+
+                if (mId == list[i].mId || mId == 'admin') {
+
+                    output += "<div style='text-align: right;' class='right-down'><button class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#rmModal\" onclick=\"reModiForm('" + list[i].pcNum + "','" + list[i].reComment + "','" + list[i].reNum + "')\">수정</button><button class='btn btn-danger' onclick=\"reDelete('" + list[i].pcNum + "','" + list[i].reNum + "')\">삭제</button></div>";
+
+
+                    output += "<br/>";
+
+                }
+
+                output += "</div>";
+                output += "</li>";
+                output += "</ul>"
+
+
+                let rcNum = list[i].pcNum;
+
+                $(`#reId${rcNum}`).after(output);
+
+            }
+        }
+
+    });
+
+    // reModiForm : 답글 수정 폼
+    function reModiForm(pcNum, reComment, reNum) {
+        console.log('문의글 수정폼 pcNum : ' + pcNum);
+        console.log('문의글 수정폼 reComment : ' + reComment);
+        console.log('문의글 수정폼 reNum : ' + reNum);
+
+        let output = "";
+
+        output += "<div class=\"modal-header\">";
+        output += "<h1 class=\"modal-title fs-5\" id=\"rmModalLabel\">답글 수정</h1>";
+        output += "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>";
+        output += "</div>";
+        output += "<div class=\"modal-body\">";
+        output += "<form action='/reModify' name='reModifyForm' method='POST'>";
+        output += "<input type='hidden' value=" + reNum + " name='reNum' id='reNum'/>";
+        output += "<input type='hidden' value=" + pcNum + " name='pcNum' id='pcNum'/>";
+        output += "<input type='hidden' value=" + sNum + " name='sNum'/>";
+        output += "<input type='hidden' value='" + mId + "' name='mId'/>";
+        output += "<textarea row=\"20\" cols=\"40\" name='reComment' id='remComment'>" + reComment + "</textarea>";
+        output += "</div>";
+        output += "<div class=\"modal-footer\">";
+        output += "<button type=\"button\" class=\"btn btn-secondary\" data-bs-dismiss=\"modal\">Close</button>";
+        output += "<button class='btn btn-primary' data-bs-dismiss='modal' type='button' onclick='reModify()'>수정</button>";
+        output += "</div>";
+        output += "</form>";
+
+        // 모달창에 폼을 추가하여 보여줍니다.
+        $('#rmModal-modal-content').html(output);
+
+    }
+
+    // 답글 수정 submit
+    function reModify(){
+        reModifyForm.submit();
+    }
+
+
+
+    // reDelete : 답글 삭제
+    function reDelete(pcNum, reNum) {
+        console.log('답글 삭제 pcNum : ' + pcNum);
+        console.log('답글 삭제 sNum : ' + sNum);
+        console.log('답글 삭제 reNum : ' + reNum);
+
+
+        $.ajax({
+            type: "POST",
+            url: "/reDelete",
+            data: {
+                "sNum": sNum,
+                "reNum": reNum
+            },
+            dataType: "json",
+            success: function (result) {
+                console.log(result);
+                list = result;
+                alert('댓글이 삭제되었습니다.');
+                location.href = "/sView/" + sNum;
+            },
+            error: function () {
+                alert('답글 삭제 통신 실패');
+            }
+        });
+    }
+
+
+</script>
+
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icia.mgs.dao.CartDAO">
+
+    <!-- 장바구니에 상품 추가 -->
+    <insert id="addToCart" parameterType="cart">
+        INSERT INTO CART
+        VALUES (CART_SEQ.NEXTVAL, #{mId}, #{sNum}, #{cCount}, SYSDATE)
+    </insert>
+
+    <!--  상품목록  -->
+    <select id="ctlist" resultType="cart" parameterType="String">
+        select * from cart c, sale s, product p where c.snum=s.snum and s.pnum=p.pnum and c.mid=#{mId}
+    </select>
+
+    <!-- 장바구니에 상품 삭제 -->
+    <delete id="deleteCartItem" parameterType="cart">
+        DELETE FROM cart
+        WHERE mId = #{mId}
+          AND ctNum = #{ctNum}
+    </delete>
+
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icia.mgs.dao.SvPeopleDAO">
+
+    <select id="svfindAll" resultType="svpeople">
+        SELECT * FROM SVPEOPLE WHERE PSNUM = #{psNum} AND MID = #{mId}
+    </select>
+
+    <select id="svapply">
+        INSERT INTO SVPEOPLE (SVNUM, PSNUM, MID, SVCOUNT)VALUES (SVPEOPLE_SEQ.NEXTVAL, #{psNum} , #{mId}, #{svCount})
+    </select>
+
+    <select id="svcancel">
+        DELETE FROM SVPEOPLE WHERE PSNUM = #{psNum} AND MID = #{mId}
+    </select>
+
+    <select id="findSvNum" resultType="svpeople">
+        SELECT * FROM SVPEOPLE WHERE PSNUM = #{psNum}
+    </select>
+
+</mapper>

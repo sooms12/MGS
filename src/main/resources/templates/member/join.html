@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Ogani Template">
+  <meta name="keywords" content="Ogani, unica, creative, html">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <title>회원가입</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+  <!-- Css Styles -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+  <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+  <link rel="stylesheet" href="/css/jquery-ui.min.css" type="text/css">
+  <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+  <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <link rel="shortcut icon" href="/img/banner/파비콘.png" type="image/x-icon">
+
+  <style>
+    .footer__copyright__text {
+      text-align: center;
+    }
+
+    input {
+      height: 48px;
+      font-size: 16px;
+      padding-left: 20px;
+
+      vertical-align: middle !important;
+    }
+
+    .center {
+      text-align: center;
+      vertical-align: middle !important;
+      width: 150px;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<!-- Header Section Begin -->
+<header class="header">
+  <div class="header__top">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-6">
+          <div class="header__top__left">
+
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="header__top__right">
+            <div class="header__top__right__social" th:if="${session.loginId ne null}">
+              <a id="mypage"><i class=""></i>내정보</a>
+            </div>
+
+            <!-- 회원목록 -->
+            <div class="header__top__right__social" th:if="${session.loginId eq 'admin'}">
+              <a id="mList"><i class=""></i>회원목록</a>
+            </div>
+
+            <div class="header__top__right__language" th:if="${session.loginId eq null}">
+              <div>로그인/회원가입</div>
+              <span class="arrow_carrot-down"></span>
+              <ul>
+                <li>
+                  <a href="/loginForm" th:if="${session.loginId eq null}">
+                    <i class="fa fa-user"> </i>로그인</a>
+                </li>
+                <li>
+                  <a href="/joinForm" data-bs-toggle="modal" data-bs-target="#myModal"
+                     th:if="${session.loginId eq null}">
+                    <i class=" fa fa-info-circle"></i>회원가입</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="modal" id="myModal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                    <h4 class="modal-title">회원가입</h4>
+                    <span type="button" class="icon_close" data-bs-dismiss="modal"></span>
+                  </div>
+
+                  <!-- Modal body -->
+                  <div class="modal-body" style="text-align: center">
+                    <a type="button" id="join"><img src="/img/이메일가입.png"/></a>
+                    <a type="button" id="kLogin"><img src="/img/카카오로그인.png"/></a>
+                  </div>
+
+                  <!-- Modal footer -->
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="header__top__right__auth" th:if="${session.loginId ne null}">
+              <a id="logout"><i class="fa fa-user"></i>로그아웃</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="header__logo">
+          <a href="/"><img src="/img/공구의숲 로고3.png" alt="공구의숲 로고"></a>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <nav class="header__menu">
+          <ul>
+            <li><a id="sList">전체상품</a></li>
+            <li><a id="request">상품신청</a></li>
+            <li><a class="psList">인원조사참여</a></li>
+            <li th:if="${session.loginId eq 'admin'}"><a href="">관리자메뉴</a>
+              <ul class="header__menu__dropdown">
+                <li><a id="cList">회사목록</a></li>
+                <li><a id="pList">상품목록</a></li>
+                <li><a id="rqList">신청물품 목록</a></li>
+                <li><a class="psList">인원조사 목록</a></li>
+              </ul>
+            </li>
+
+          </ul>
+        </nav>
+      </div>
+      <div class="col-lg-3">
+        <div class="header__cart">
+          <ul>
+            <li th:if="${session.loginId ne null}"><a id="likeList"><i class="fa fa-heart" style="text-align: center"><p>찜한상품</p></i></a></li>
+            <li><a id="ctlist"><i class="fa fa-shopping-bag" style="text-align: center"><p>장바구니</p></i></a></li>
+            <li><a href="/csList"><i class="fa fa-phone" style="text-align: center"><p>고객센터</p></i></a></li>
+          </ul>
+          <div class="header__cart__price"><span></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="humberger__open">
+      <i class="fa fa-bars"></i>
+    </div>
+  </div>
+</header>
+<!-- Header Section End -->
+
+<!-- 회원가입 start -->
+<div style="margin-top: 50px"></div>
+<section class="breadcrumb-section set-bg" data-setbg="/img/동숲바닥.png">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <div class="breadcrumb__text">
+          <h2>회원가입</h2>
+          <div class="breadcrumb__option">
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="blog spad">
+  <form action="mJoin" method="post" enctype="multipart/form-data" name="mJoinForm">
+
+    <div class="container mt-3">
+      <div>
+
+        <div class="col-lg-9" style="padding-left: 10%; padding-right: 10%; margin-left: 10%; margin-right: 10%;">
+          <table class="table table-bordered">
+            <tr>
+              <th class="center">아이디</th>
+              <td><input type="text" id="mId" name="mId" required size="50"/>
+                <br/><span id="check1"></span></td>
+            </tr>
+
+            <tr>
+              <th class="center">비밀번호</th>
+              <td><input type="password" id="mPw" name="mPw" required size="50"/>
+                <br/><span id="check2"></span></td>
+            </tr>
+
+            <tr>
+              <th class="center">비밀번호 확인</th>
+              <td><input type="password" id="checkPw" required size="50"/>
+                <br/><span id="check3"></span></td>
+            </tr>
+
+            <tr>
+              <th class="center">이름</th>
+              <td><input type="text" name="mName" required size="50"/></td>
+            </tr>
+
+            <tr>
+              <th class="center">생년월일</th>
+              <td><input type="date" name="mBirth" required/></td>
+            </tr>
+
+            <tr>
+              <th class="center">성별</th>
+              <td>
+                <input type="radio" name="mGender" value="남성" checked/> 남성 &nbsp;
+                <input type="radio" name="mGender" value="여성"/> 여성
+              </td>
+            </tr>
+
+            <tr>
+              <th class="center">이메일</th>
+              <td><input type="email" id="mEmail" name="mEmail" required size="30"/>
+                <span id="check4"><input type="button" id="checkEmail" value="인증번호 발송" style="padding-right: 20px"/></span><br>
+                <span id="check5"></span></td>
+            </tr>
+
+            <tr>
+              <th class="center">연락처</th>
+              <td><input type="text" name="mPhone" required size="50"/></td>
+            </tr>
+
+            <tr>
+              <th class="center">주소</th>
+              <td>
+                <input type="text" id="sample6_postcode" placeholder="우편번호"
+                       size="30"/>
+                <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" style="padding-right: 20px"/><br>
+                <input type="text" size="50" id="sample6_address" placeholder="주소"/><br>
+                <input type="text" size="50" id="sample6_detailAddress" placeholder="상세주소"/>
+                <input type="hidden" id="mAddr" name="mAddr"/>
+              </td>
+            </tr>
+
+          </table>
+
+          <div style="text-align: right;">
+            <button th:type="button" id="submitForm" class="btn btn-success">가입</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
+<!-- 회원가입 end -->
+
+<!-- Footer 시작했다~ -->
+<footer class="footer spad">
+  <div class="col-lg-12">
+    <div class="footer__widget">
+      <h6></h6>
+      <a><a href="#">회사소개</a></a>&nbsp;&nbsp;
+      <a><a href="#">이용약관</a></a>&nbsp;&nbsp;
+      <a><a href="#">개인정보처리방침</a></a>&nbsp;&nbsp;
+      <a><a href="#">FAQ</a></a>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="footer__about">
+          <div class="footer__about__logo">
+            <a href="/indexForm"><img src="/img/공구의숲 로고3.png" alt=""></a>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
+        <div class="footer__widget">
+          <h5 class="mb-12"><b class="fs-14px">고객센터 1234-5678</b></h5>
+          <a>평일 AM 10:00 ~ PM 5:00</p></a>
+          <a>점심시간 PM 12:30 ~ PM 13:30</p></a>
+          <a>주말 및 공휴일 휴무</p></a>
+          <a>계좌번호 NH농협 000-0000-000-00</p></a>
+          <a>문의메일 Kimmango@naver.com</p></a>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-12">
+        <div class="footer__widget">
+          <a>대표자.김망고</a></br>
+          <a>사업자등록번호.1234567890</a></br>
+          <a>주소. 인천광역시 미추홀구 한나루로 453</a></br>
+          <a>TEL.032-1234-5678</a></br>
+          <a>Email. hello@colorlib.com</a>
+
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="footer__copyright">
+          <div class="footer__copyright__text">
+            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+              All rights reserved | This template is made with <i class="fa fa-heart"
+                                                                  aria-hidden="true"></i> by <a
+                      href="https://colorlib.com" target="_blank">Colorlib</a>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- Footer 끝났다~ -->
+
+<!-- Js Plugins -->
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery-ui.min.js"></script>
+<script src="/js/jquery.slicknav.js"></script>
+<script src="/js/mixitup.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+        crossorigin="anonymous"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<script>
+
+  let id = "[[${session.loginId}]]";
+
+  // 회원가입
+  $('#join').click(function () {
+    location.href = "/joinForm";
+  });
+
+  // 카카오로그아웃
+  $('#klogout').click(function () {
+    location.href = "/klogout";
+  });
+
+  // 회원목록
+  $('#mList').click(function () {
+    location.href = "/mList";
+  });
+
+  // 로그인
+  $('#login').click(function () {
+    location.href = "/loginForm";
+  });
+
+  // 내정보
+  $('#mypage').click(function () {
+    location.href = "/mView/[[${session.loginId}]]";
+  });
+
+  // 찜목록
+  $('#likeList').click(function () {
+      location.href = "/likeList/[[${session.loginId}]]";
+  });
+
+  // 장바구니 목록
+  $('#ctlist').click(function () {
+    if (id == "") {
+      alert('로그인 후 이용해주세요!')
+      location.href = ""
+    }
+    if (id != "") {
+      location.href = "/ctlist";
+    }
+  });
+
+  // 로그아웃
+  $('#logout').click(function () {
+    location.href = "/mLogout";
+  });
+
+  // 신청페이지
+  $('#request').click(function () {
+    location.href = "/requestForm";
+  });
+
+  // 신청목록
+  $('#rqList').click(function () {
+    location.href = "/rqList";
+  });
+
+  // 회사목록
+  $('#cList').click(function () {
+    location.href = "/cList";
+  });
+
+  // 상품목록
+  $('#pList').click(function () {
+    location.href = "/pList";
+  });
+
+  // 판매목록
+  $('#sList').click(function () {
+    location.href = "/sList";
+  });
+
+  $('#request').click(function () {
+    if (id == "") {
+      alert('로그인 후 이용해주세요!')
+      location.href = "redirect:/loginForm"
+    }else {
+      location.href = "requestForm";
+    }
+  });
+
+  $('#rqList').click(function () {
+    location.href = "/rqList";
+  });
+
+  $('.psList').click(function () {
+    location.href = "/psList";
+  });
+
+  $('.psList').click(function () {
+    if (id == "") {
+      alert('로그인 후 이용해주세요!')
+      location.href = "redirect:/loginForm"
+    }else {
+      location.href = "/psList";
+    }
+  });
+
+  // 카카오인증버튼
+  $('#kLogin').click(function () {
+    location.href = "";
+  });
+
+
+  let check_id = false;
+  let check_pw = false;
+  let check_pw2 = false;
+  let check_email = false;
+  let check_email2 = false;
+
+  $(function () {
+
+    // id="mId" 인 요소의 키를 눌렀다가 뗐을때 실행되는 함수
+    $('#mId').keyup(function () {
+      let mId = $('#mId').val();
+      let check1 = $('#check1');
+
+      // Ajax를 사용해서 아이디 중복체크
+      $.ajax({
+        type: "POST",
+        url: "idCheck",
+        data: {"mId": mId},
+        dataType: "text",
+        success: function (result) {
+          if (result == "OK") {
+            check1.html(mId + '는 사용 가능한 아이디');
+            check1.css('color', 'blue');
+            check_id = true;
+          } else {
+            check1.html(mId + '는 사용중인 아이디');
+            check1.css('color', 'red');
+            check_id = false;
+          }
+        },
+        error: function () {
+          alert('idCheck 통신 실패!');
+        }
+      });
+    });
+
+    $('#mPw').keyup(function () {
+      let mPw = $('#mPw').val();
+      let check2 = $('#check2');
+
+      // 기본값 -1
+      let num = mPw.search(/[0-9]/);       // 숫자
+      let eng = mPw.search(/[a-z]/);       // 영문자
+      let spe = mPw.search(/[~!@#$%^&*]/); // 특수문자
+      let spc = mPw.search(/\s/);          // 공백여부
+
+      if (mPw.length < 8 || mPw.length > 16) {
+        check2.html("비밀번호는 8자에서 16자리 이내로 입력해주세요.");
+        check2.css('color', 'red');
+        check_pw = false;
+      } else if (spc != -1) {
+        check2.html("공백없이 입력해주세요.");
+        check2.css('color', 'red');
+        check_pw = false;
+      } else if (num == -1 || eng == -1 || spe == -1) {
+        check2.html("영문, 숫자, 특수문자를 혼합해서 입력해주세요.");
+        check2.css('color', 'red');
+        check_pw = false;
+      } else {
+        check2.html("사용가능한 비밀번호 입니다.");
+        check2.css('color', 'blue');
+        check_pw = true;
+      }
+    });
+
+    $('#checkPw').keyup(function () {
+      let mPw = $('#mPw').val();
+      let checkPw = $('#checkPw').val();
+      let check3 = $('#check3');
+
+      if (mPw == checkPw) {
+        check3.html("비밀번호가 일치합니다.");
+        check3.css('color', 'blue');
+        check_pw2 = true;
+      } else {
+        check3.html("비밀번호가 일치하지 않습니다.");
+        check3.css('color', 'red');
+        check_pw2 = false;
+      }
+    });
+
+    $('#mEmail').keyup(function(){
+      let mEmail = $('#mEmail').val();
+      let check5 = $('#check5')
+
+      $.ajax({
+        type: "POST",
+        url: "emailCheck3",
+        data: {"mEmail": mEmail},
+        dataType: "text",
+        success: function (result) {
+          if (result == "OK") {
+            check5.html(mEmail + '는 사용 가능한 이메일입니다.');
+            check5.css('color', 'blue');
+            $('#checkEmail').prop('disabled', false);
+            check_email2 = true;
+          } else {
+            check5.html(mEmail + '는 사용중인 이메일입니다.');
+            check5.css('color', 'red');
+            $('#checkEmail').prop('disabled', true);
+            check_email2 = false;
+          }
+        },
+        error: function () {
+          alert('emailCheck3 통신 실패!');
+        }
+      });
+    });
+
+    $('#checkEmail').click(function () {
+      console.log('클릭');
+      let mEmail = $('#mEmail').val();
+      let check4 = $('#check4');
+
+      // Ajax 사용해서 이메일 전송 및 인증번호 받아오기
+      $.ajax({
+        type: "POST",
+        url: "emailCheck",
+        data: {"mEmail": mEmail},
+        dataType: "text",
+        success: function (uuid) {
+          console.log(uuid);
+          check4.empty();
+          check4.append(`<br/><input type="text" id="uuid1" size="30"/>`);
+          check4.append(`<input type="button" style="padding-right: 20px" value="인증" id="btnUUID" data-value="${uuid}"/>`);
+        },
+        error: function () {
+          alert('emailCheck 통신 실패!')
+        }
+      });
+    });
+
+    $(document).on("click", "#btnUUID", function () {
+      let uuid1 = $('#uuid1').val();
+      let uuid = $(this).data("value");
+
+      if (uuid1 == uuid) {
+        alert('이메일 인증에 성공했습니다.');
+        $('#mEmail').prop('readonly', true);  // readonly 속성 적용
+        $('#mEmail').off('keyup');  // keyup 이벤트 리스너 삭제
+        $('#check5').empty();
+        $('#check5').html('이메일 인증이 완료됐습니다.');
+        $('#check4').empty();
+        check_email = true;
+      } else {
+        alert('인증번호를 확인해주세요.');
+        $('#uuid1').val("");
+        $('#check5').empty();
+        check_email = false;
+      }
+    });
+  });
+
+  function sample6_execDaumPostcode() {
+    new daum.Postcode({
+      oncomplete: function (data) {
+        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+        var addr = ''; // 주소 변수
+
+        //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+        if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+          addr = data.roadAddress;
+        } else { // 사용자가 지번 주소를 선택했을 경우(J)
+          addr = data.jibunAddress;
+        }
+
+        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+        document.getElementById('sample6_postcode').value = data.zonecode;
+        document.getElementById("sample6_address").value = addr;
+        // 커서를 상세주소 필드로 이동한다.
+        document.getElementById("sample6_detailAddress").focus();
+
+      }
+    }).open();
+  }
+
+  $('#mProfile').on("change", function (event) {
+
+    let file = event.target.files[0];
+
+    let reader = new FileReader();
+
+    reader.onload = function (e) {
+      $('#mProfileName').attr("src", e.target.result);
+    }
+
+    reader.readAsDataURL(file);
+
+  });
+
+  $('#submitForm').click(function () {
+    let mAddr = $('#mAddr');
+
+    let addr1 = $('#sample6_postcode').val();
+    let addr2 = $('#sample6_address').val();
+    let addr3 = $('#sample6_detailAddress').val();
+
+    let addr = "(" + addr1 + ")" + addr2 + ", " + addr3;
+
+    mAddr.val(addr);
+
+    if (!check_id) {
+      alert('아이디 중복체크를 진행해주세요.');
+    } else if (!check_pw || !check_pw2) {
+      alert('비밀번호를 확인해주세요.');
+    } else if (!check_email || !check_email2) {
+      alert('이메일 인증을 진행해주세요.');
+    } else {
+      mJoinForm.submit();
+    }
+  });
+
+
+
+</script>
+
+</html>
